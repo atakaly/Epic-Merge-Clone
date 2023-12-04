@@ -1,4 +1,6 @@
+using DG.Tweening;
 using EpicMergeClone.Game.Items;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EpicMergeClone.Game.Mechanics.Grid
@@ -7,9 +9,10 @@ namespace EpicMergeClone.Game.Mechanics.Grid
     {
         private int m_X;
         private int m_Y;
-
         private CellState m_CellState;
-        private ItemBase m_CurrentItem;
+
+        [SerializeField] private ItemBase m_CurrentItem;
+        [SerializeField] private List<Cell> m_NeighbourCells;
 
         public int X
         {
@@ -29,21 +32,68 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             set { m_CellState = value; }
         }
 
+        public ItemBase CurrentItem
+        {
+            get { return m_CurrentItem; }
+            private set { m_CurrentItem = value; }
+        }
+
+        public List<Cell> NeighbourCells
+        {
+            get { return m_NeighbourCells; }
+            set { m_NeighbourCells = value; }
+        }
+
         private void Awake()
         {
-            m_CellState = CellState.Available;
+            m_CellState = m_CurrentItem != null ? CellState.Occupied : CellState.Available;
         }
 
         public void AddItem(ItemBase item)
         {
-            item.transform.SetParent(transform);
-            item.transform.localPosition = Vector3.zero;
             m_CurrentItem = item;
+            m_CurrentItem.Move(transform.position, 0.3f);
+            m_CurrentItem.CurrentCell = this;
+            m_CellState = CellState.Occupied;
         }
 
         public void RemoveItem()
         {
             m_CurrentItem = null;
+            m_CellState = CellState.Available;
+        }
+
+        public void ShiftItem()
+        {
+            List<Cell> visitedCells = new List<Cell>();
+            Cell availableCell = GetFirstAvailableNeighbour(visitedCells);
+            ItemBase oldItem = m_CurrentItem;
+
+            m_CurrentItem.Move(availableCell.transform.position, 0.3f, () => availableCell.AddItem(oldItem));
+        }
+
+        public Cell GetFirstAvailableNeighbour(List<Cell> visitedCells)
+        {
+            for (int i = 0; i < NeighbourCells.Count; i++)
+            {
+                Cell neighbor = NeighbourCells[i];
+                if (neighbor.State == CellState.Available && !visitedCells.Contains(neighbor))
+                    return neighbor;
+            }
+
+            for (int i = 0; i < NeighbourCells.Count; i++)
+            {
+                Cell neighbor = NeighbourCells[i];
+                if (neighbor.State == CellState.Occupied && !visitedCells.Contains(neighbor))
+                {
+                    visitedCells.Add(neighbor);
+                    Cell availableNeighbor = neighbor.GetFirstAvailableNeighbour(visitedCells);
+                    if (availableNeighbor != null)
+                        return availableNeighbor;
+                }
+            }
+
+            return null;
         }
     }
 }

@@ -7,5 +7,10 @@ namespace EpicMergeClone.Game.Items
     {
         public string UniqueId;
         public Sprite itemSprite;
+
+        public bool IsSameType(ItemDataSO other)
+        {
+            return UniqueId == other.UniqueId;
+        }
     }
 }
