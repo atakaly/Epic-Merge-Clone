@@ -1,4 +1,3 @@
-using DG.Tweening;
 using EpicMergeClone.Game.Items;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +6,9 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 {
     public class Cell : MonoBehaviour
     {
-        private int m_X;
-        private int m_Y;
-        private CellState m_CellState;
+        [SerializeField] private int m_X;
+        [SerializeField] private int m_Y;
+        [SerializeField] private CellState m_CellState;
 
         [SerializeField] private ItemBase m_CurrentItem;
         [SerializeField] private List<Cell> m_NeighbourCells;

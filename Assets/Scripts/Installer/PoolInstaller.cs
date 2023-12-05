@@ -11,11 +11,11 @@ namespace EpicMergeClone.Installers
                 .WithInitialSize(15)
                 .FromComponentInNewPrefabResource("Prefabs/ItemBase");
 
-            Container.BindMemoryPool<ItemBase, ItemPool<ItemBase>>()
+            Container.BindMemoryPool<CollectibleItem, ItemPool<CollectibleItem>>()
                 .WithInitialSize(5)
                 .FromComponentInNewPrefabResource("Prefabs/CollectibleItem");
 
-            Container.BindMemoryPool<ItemBase, ItemPool<ItemBase>>()
+            Container.BindMemoryPool<ProductionItem, ItemPool<ProductionItem>>()
                 .WithInitialSize(2)
                 .FromComponentInNewPrefabResource("Prefabs/ProductionItem");
         }
