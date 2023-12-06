@@ -1,4 +1,4 @@
-using EpicMergeClone.Game.Items;
+using EpicMergeClone.Game.Mechanics.Inventory;
 using Zenject;
 
 namespace EpicMergeClone.Installers
@@ -8,6 +8,8 @@ namespace EpicMergeClone.Installers
         public override void InstallBindings()
         {
             PoolInstaller.Install(Container);
+
+            Container.Bind<Inventory>().AsSingle();
         }
     }
 }

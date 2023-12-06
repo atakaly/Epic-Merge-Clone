@@ -19,11 +19,11 @@ namespace EpicMergeClone
             public int x;
             public int y;
             public CellState state;
-            public ItemBaseData itemData;
+            public ItemData itemData;
         }
 
         [System.Serializable]
-        public class ItemBaseData
+        public class ItemData
         {
             public string itemId;
             public int itemType; //Production etc. 

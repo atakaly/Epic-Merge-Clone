@@ -9,8 +9,6 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 {
     public class CellGrid : MonoBehaviour
     {
-        private event Action OnGridStateChanged;
-
         [SerializeField] private List<Cell> m_Grid;
 
         [SerializeField] private int width;
@@ -66,7 +64,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 
             for (int i = 0; i < m_Grid.Count; i++)
             {
-                GameState.ItemBaseData thisCellItemData = new GameState.ItemBaseData()
+                GameState.ItemData thisCellItemData = new GameState.ItemData()
                 {
                     itemId = m_Grid[i].CurrentItem == null ? "" : m_Grid[i].CurrentItem.ItemDataSO.UniqueId
                 };
