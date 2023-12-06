@@ -1,4 +1,5 @@
 using EpicMergeClone.Game.Items;
+using EpicMergeClone.Pool;
 using Zenject;
 
 namespace EpicMergeClone.Installers
@@ -7,17 +8,22 @@ namespace EpicMergeClone.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindMemoryPool<ItemBase, ItemPool<ItemBase>>()
+            Container.BindMemoryPool<ItemBase, GenericItemPool<ItemBase>>()
                 .WithInitialSize(15)
                 .FromComponentInNewPrefabResource("Prefabs/ItemBase");
 
-            Container.BindMemoryPool<CollectibleItem, ItemPool<CollectibleItem>>()
+            Container.BindMemoryPool<CollectibleItem, GenericItemPool<CollectibleItem>>()
                 .WithInitialSize(5)
                 .FromComponentInNewPrefabResource("Prefabs/CollectibleItem");
 
-            Container.BindMemoryPool<ProductionItem, ItemPool<ProductionItem>>()
+            Container.BindMemoryPool<ProductionItem, GenericItemPool<ProductionItem>>()
                 .WithInitialSize(2)
                 .FromComponentInNewPrefabResource("Prefabs/ProductionItem");
+
+            Container.Bind<ItemPoolManager>()
+                .AsSingle();
+
+            Container.QueueForInject(typeof(ItemPoolManager));
         }
     }
 }

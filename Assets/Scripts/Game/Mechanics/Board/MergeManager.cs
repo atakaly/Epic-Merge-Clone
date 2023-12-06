@@ -1,42 +1,32 @@
 using EpicMergeClone.Game.Items;
 using EpicMergeClone.Game.Mechanics.Grid;
+using EpicMergeClone.Pool;
 using System.Collections.Generic;
 
 namespace EpicMergeClone.Game.Mechanics.Board
 {
     public static class MergeManager
     {
-        public static void Merge(List<ItemBase> mergingItems, 
-            ItemPool<ItemBase> baseItemPool,
-            ItemPool<CollectibleItem> collectibleItemPool,
-            ItemPool<ProductionItem> productionItemPool,
+        public static void Merge(List<ItemBase> mergingItems,
+            ItemPoolManager poolManager,
             AllItemDatas allItemsData)
         {
             var targetItem = mergingItems[0];
-            var itemTreeSO = allItemsData.GetItemTreeOf(targetItem.ItemDataSO);
+            var targetCell = targetItem.CurrentCell;
             var targetItemData = targetItem.ItemDataSO;
 
-            targetItem.InitializeItem(itemTreeSO.GetNextItemData(targetItemData));
-
-            for (int i = 1; i < mergingItems.Count; i++)
+            for (int i = 0; i < mergingItems.Count; i++)
             {
                 var currentItem = mergingItems[i];
-
                 currentItem.CurrentCell.RemoveItem();
-
-                if (currentItem is ProductionItem productionItem)
-                {
-                    productionItemPool.Despawn(productionItem);
-                } 
-                else if (currentItem is CollectibleItem collectibleItem)
-                {
-                    collectibleItemPool.Despawn(collectibleItem);
-                }
-                else
-                {
-                    baseItemPool.Despawn(currentItem);
-                }
+                poolManager.DespawnItem(currentItem);
             }
+
+            var itemTreeSO = allItemsData.GetItemTreeOf(targetItem.ItemDataSO);
+            
+            ItemBase newItem = poolManager.SpawnItem(targetItem);
+            targetCell.AddItem(newItem);
+            newItem.InitializeItem(itemTreeSO.GetNextItemData(targetItemData));
         }
 
         public static List<ItemBase> TryGetMergeItems(ItemBase currentItem, ItemBase targetItem)

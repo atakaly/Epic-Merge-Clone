@@ -1,6 +1,7 @@
 using DG.Tweening;
 using EpicMergeClone.Game.Mechanics.Board;
 using EpicMergeClone.Game.Mechanics.Grid;
+using EpicMergeClone.Pool;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,28 +12,20 @@ namespace EpicMergeClone.Game.Items
     public class ItemBase : MonoBehaviour
     {
         [SerializeField] public ItemDataSO ItemDataSO;
-
         [SerializeField] private SpriteRenderer m_SpriteRenderer;
 
         private List<Cell> m_CollidingCells = new List<Cell>();
 
         public Cell CurrentCell { get; set; }
 
-        private ItemPool<ItemBase> m_BaseItemPool;
-        private ItemPool<CollectibleItem> m_CollectibleItemPool;
-        private ItemPool<ProductionItem> m_ProductionItemPool;
-
+        private ItemPoolManager m_ItemPoolManager;
         private AllItemDatas m_AllItemDatas;
 
         [Inject]
-        public void Construct(ItemPool<ItemBase> baseItemPool,
-            ItemPool<CollectibleItem> collectibleItemPool,
-            ItemPool<ProductionItem> productionItemPool,
+        public void Construct(ItemPoolManager itemPoolManager,
             AllItemDatas allItemDatas)
         {
-            m_BaseItemPool = baseItemPool;
-            m_CollectibleItemPool = collectibleItemPool;
-            m_ProductionItemPool = productionItemPool;
+            m_ItemPoolManager = itemPoolManager;
             m_AllItemDatas = allItemDatas;
         }
 
@@ -81,7 +74,7 @@ namespace EpicMergeClone.Game.Items
 
             if (mergingItems != null)
             {
-                MergeManager.Merge(mergingItems, m_BaseItemPool, m_CollectibleItemPool, m_ProductionItemPool, m_AllItemDatas);
+                MergeManager.Merge(mergingItems, m_ItemPoolManager, m_AllItemDatas);
             } 
             else
             {
@@ -94,8 +87,6 @@ namespace EpicMergeClone.Game.Items
                 targetCell.AddItem(this);
                 CurrentCell = targetCell;
             }
-
-            CurrentCell.OnItemAdded?.Invoke();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

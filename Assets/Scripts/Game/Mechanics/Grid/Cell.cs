@@ -7,7 +7,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 {
     public class Cell : MonoBehaviour
     {
-        public Action OnItemAdded;
+        public event Action OnItemAdded;
 
         [SerializeField] private int m_X;
         [SerializeField] private int m_Y;
@@ -57,6 +57,8 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             m_CurrentItem.Move(transform.position, 0.3f);
             m_CurrentItem.CurrentCell = this;
             m_CellState = CellState.Occupied;
+
+            OnItemAdded?.Invoke();
         }
 
         public void RemoveItem()

@@ -1,4 +1,5 @@
 using EpicMergeClone.Game.Items;
+using EpicMergeClone.Pool;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,21 +18,15 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 
         [SerializeField] private Cell cellPrefab;
 
-        private ItemPool<ItemBase> m_BaseItemPool;
-        private ItemPool<CollectibleItem> m_CollectibleItemPool;
-        private ItemPool<ProductionItem> m_ProductionItemPool;
+        private ItemPoolManager m_ItemPoolManager;
 
         private AllItemDatas m_AllItemDatas;
 
         [Inject]
-        public void Construct(ItemPool<ItemBase> baseItemPool, 
-            ItemPool<CollectibleItem> collectibleItemPool, 
-            ItemPool<ProductionItem> productionItemPool,
+        public void Construct(ItemPoolManager itemPoolManager,
             AllItemDatas allItemDatas)
         {
-            m_BaseItemPool = baseItemPool;
-            m_CollectibleItemPool = collectibleItemPool;
-            m_ProductionItemPool = productionItemPool;
+            m_ItemPoolManager = itemPoolManager;
             m_AllItemDatas = allItemDatas;
         }
 
@@ -54,18 +49,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
                 if (itemData == null)
                     continue;
 
-                if(itemData is ProductionItemSO productionItemData)
-                {
-                    m_Grid[i].AddItem(m_ProductionItemPool.SpawnItem(itemData));
-                }
-                else if (itemData is CollectibleItemSO collectibleItemData)
-                {
-                    m_Grid[i].AddItem(m_CollectibleItemPool.SpawnItem(itemData));
-                }
-                else
-                {
-                    m_Grid[i].AddItem(m_BaseItemPool.SpawnItem(itemData));
-                }
+                m_Grid[i].AddItem(m_ItemPoolManager.SpawnItem(itemData));
             }
         }
 

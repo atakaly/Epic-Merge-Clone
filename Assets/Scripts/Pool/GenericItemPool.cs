@@ -1,8 +1,9 @@
+using EpicMergeClone.Game.Items;
 using Zenject;
 
-namespace EpicMergeClone.Game.Items
+namespace EpicMergeClone.Pool
 {
-    public class ItemPool<T> : MemoryPool<T> where T : ItemBase
+    public class GenericItemPool<T> : MemoryPool<T> where T : ItemBase
     {
         public T SpawnItem(ItemDataSO itemData)
         {
