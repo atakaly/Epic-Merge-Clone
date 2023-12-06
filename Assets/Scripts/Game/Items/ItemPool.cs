@@ -10,5 +10,23 @@ namespace EpicMergeClone.Game.Items
             item.InitializeItem(itemData);
             return item;
         }
+
+        protected override void OnSpawned(T item)
+        {
+            base.OnSpawned(item);
+            item.gameObject.SetActive(true);
+        }
+
+        protected override void OnCreated(T item)
+        {
+            base.OnSpawned(item);
+            item.gameObject.SetActive(false);
+        }
+
+        protected override void OnDespawned(T item)
+        {
+            base.OnDespawned(item);
+            item.gameObject.SetActive(false);
+        }
     }
 }

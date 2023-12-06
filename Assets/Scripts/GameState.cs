@@ -26,6 +26,7 @@ namespace EpicMergeClone
         public class ItemBaseData
         {
             public string itemId;
+            public int itemType; //Production etc. 
         }
 
         public static void SaveGridState(GridData gridData)

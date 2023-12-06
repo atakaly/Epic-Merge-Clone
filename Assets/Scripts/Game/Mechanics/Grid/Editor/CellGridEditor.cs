@@ -16,6 +16,11 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             {
                 t.CreateGrid();
             }
+
+            if(GUILayout.Button("Save Grid State"))
+            {
+                t.SaveCurrentGridState();
+            }
         }
     }
 }

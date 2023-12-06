@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Bean 2
   m_EditorClassIdentifier: 
   UniqueId: chocolate_bean_2
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 99edf8c9fb0c42c44b1b693e22d18312, type: 3}

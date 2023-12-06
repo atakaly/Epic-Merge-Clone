@@ -7,7 +7,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 {
     public class CellGrid : MonoBehaviour
     {
-        private List<Cell> m_Grid;
+        [SerializeField] private List<Cell> m_Grid;
 
         [SerializeField] private int width;
         [SerializeField] private int heigth;
@@ -32,6 +32,11 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             m_AllItemDatas = allItemDatas;
         }
 
+        public void Start()
+        {
+            SetGrid();
+        }
+
         private void SetGrid()
         {
             GameState.GridData gridData = GameState.LoadGridData();
@@ -39,14 +44,25 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             for (int i = 0; i < gridData.cells.Length; i++)
             {
                 var currentCellData = gridData.cells[i];
-                m_Grid[i].AddItem(m_BaseItemPool.SpawnItem(m_AllItemDatas.GetItemData(currentCellData.itemData.itemId)));
-            }
+                var itemData = m_AllItemDatas.GetItemData(currentCellData.itemData.itemId);
 
-            for (int i = 0; i < m_Grid.Count; i++)
-            {
+                if (itemData == null)
+                    continue;
+
+                if(itemData is ProductionItemSO productionItemData)
+                {
+                    m_Grid[i].AddItem(m_ProductionItemPool.SpawnItem(itemData));
+                }
+                else if (itemData is CollectibleItemSO collectibleItemData)
+                {
+                    m_Grid[i].AddItem(m_CollectibleItemPool.SpawnItem(itemData));
+                }
+                else
+                {
+                    m_Grid[i].AddItem(m_BaseItemPool.SpawnItem(itemData));
+                }
             }
         }
-
 
         #region Editor Utilities
 
@@ -107,6 +123,34 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             int deltaY = Mathf.Abs(y1 - y2);
 
             return (deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1);
+        }
+
+        public void SaveCurrentGridState()
+        {
+            GameState.GridData gridData = new GameState.GridData();
+
+            List<GameState.CellData> currentCellDatas = new List<GameState.CellData>();
+
+            for (int i = 0; i < m_Grid.Count; i++)
+            {
+                GameState.ItemBaseData thisCellItemData = new GameState.ItemBaseData()
+                {
+                    itemId = m_Grid[i].CurrentItem == null ? "" : m_Grid[i].CurrentItem.ItemDataSO.UniqueId
+                };
+
+                GameState.CellData newCellData = new GameState.CellData()
+                {
+                    itemData = thisCellItemData,
+                    x = m_Grid[i].X,
+                    y = m_Grid[i].Y,
+                    state = m_Grid[i].State
+                };
+
+                currentCellDatas.Add(newCellData);
+            }
+
+            gridData.cells = currentCellDatas.ToArray();
+            GameState.SaveGridState(gridData);
         }
 
         #endregion
