@@ -1,4 +1,5 @@
 using EpicMergeClone.Game.Items;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -7,6 +8,8 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 {
     public class CellGrid : MonoBehaviour
     {
+        private event Action OnGridStateChanged;
+
         [SerializeField] private List<Cell> m_Grid;
 
         [SerializeField] private int width;
@@ -46,6 +49,8 @@ namespace EpicMergeClone.Game.Mechanics.Grid
                 var currentCellData = gridData.cells[i];
                 var itemData = m_AllItemDatas.GetItemData(currentCellData.itemData.itemId);
 
+                m_Grid[i].OnItemAdded += SaveState;
+
                 if (itemData == null)
                     continue;
 
@@ -62,6 +67,40 @@ namespace EpicMergeClone.Game.Mechanics.Grid
                     m_Grid[i].AddItem(m_BaseItemPool.SpawnItem(itemData));
                 }
             }
+        }
+
+        private void SaveState()
+        {
+            GameState.SaveGridState(GetGridData());
+        }
+
+        private GameState.GridData GetGridData()
+        {
+            GameState.GridData gridData = new GameState.GridData();
+
+            List<GameState.CellData> currentCellDatas = new List<GameState.CellData>();
+
+            for (int i = 0; i < m_Grid.Count; i++)
+            {
+                GameState.ItemBaseData thisCellItemData = new GameState.ItemBaseData()
+                {
+                    itemId = m_Grid[i].CurrentItem == null ? "" : m_Grid[i].CurrentItem.ItemDataSO.UniqueId
+                };
+
+                GameState.CellData newCellData = new GameState.CellData()
+                {
+                    itemData = thisCellItemData,
+                    x = m_Grid[i].X,
+                    y = m_Grid[i].Y,
+                    state = m_Grid[i].State
+                };
+
+                currentCellDatas.Add(newCellData);
+            }
+
+            gridData.cells = currentCellDatas.ToArray();
+
+            return gridData;
         }
 
         #region Editor Utilities
@@ -127,30 +166,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 
         public void SaveCurrentGridState()
         {
-            GameState.GridData gridData = new GameState.GridData();
-
-            List<GameState.CellData> currentCellDatas = new List<GameState.CellData>();
-
-            for (int i = 0; i < m_Grid.Count; i++)
-            {
-                GameState.ItemBaseData thisCellItemData = new GameState.ItemBaseData()
-                {
-                    itemId = m_Grid[i].CurrentItem == null ? "" : m_Grid[i].CurrentItem.ItemDataSO.UniqueId
-                };
-
-                GameState.CellData newCellData = new GameState.CellData()
-                {
-                    itemData = thisCellItemData,
-                    x = m_Grid[i].X,
-                    y = m_Grid[i].Y,
-                    state = m_Grid[i].State
-                };
-
-                currentCellDatas.Add(newCellData);
-            }
-
-            gridData.cells = currentCellDatas.ToArray();
-            GameState.SaveGridState(gridData);
+            GameState.SaveGridState(GetGridData());
         }
 
         #endregion

@@ -4,6 +4,7 @@ using EpicMergeClone.Game.Mechanics.Grid;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace EpicMergeClone.Game.Items
 {
@@ -16,6 +17,24 @@ namespace EpicMergeClone.Game.Items
         private List<Cell> m_CollidingCells = new List<Cell>();
 
         public Cell CurrentCell { get; set; }
+
+        private ItemPool<ItemBase> m_BaseItemPool;
+        private ItemPool<CollectibleItem> m_CollectibleItemPool;
+        private ItemPool<ProductionItem> m_ProductionItemPool;
+
+        private AllItemDatas m_AllItemDatas;
+
+        [Inject]
+        public void Construct(ItemPool<ItemBase> baseItemPool,
+            ItemPool<CollectibleItem> collectibleItemPool,
+            ItemPool<ProductionItem> productionItemPool,
+            AllItemDatas allItemDatas)
+        {
+            m_BaseItemPool = baseItemPool;
+            m_CollectibleItemPool = collectibleItemPool;
+            m_ProductionItemPool = productionItemPool;
+            m_AllItemDatas = allItemDatas;
+        }
 
         private void Awake()
         {
@@ -58,9 +77,11 @@ namespace EpicMergeClone.Game.Items
                 return;
             }
 
-            if(MergeManager.TryMerge(this, targetCell.CurrentItem))
+            var mergingItems = MergeManager.TryGetMergeItems(this, targetCell.CurrentItem);
+
+            if (mergingItems != null)
             {
-                Debug.Log("Merged");
+                MergeManager.Merge(mergingItems, m_BaseItemPool, m_CollectibleItemPool, m_ProductionItemPool, m_AllItemDatas);
             } 
             else
             {
@@ -73,6 +94,8 @@ namespace EpicMergeClone.Game.Items
                 targetCell.AddItem(this);
                 CurrentCell = targetCell;
             }
+
+            CurrentCell.OnItemAdded?.Invoke();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

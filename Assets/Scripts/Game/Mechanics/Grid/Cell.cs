@@ -1,4 +1,5 @@
 using EpicMergeClone.Game.Items;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 {
     public class Cell : MonoBehaviour
     {
+        public Action OnItemAdded;
+
         [SerializeField] private int m_X;
         [SerializeField] private int m_Y;
         [SerializeField] private CellState m_CellState;
