@@ -8,11 +8,11 @@ namespace EpicMergeClone.Game.Mechanics.Inventory
     {
         public const string INVENTORY_STATE_PREF_NAME = "inventory_state";
 
-        List<GameState.ItemData> Items;
+        private InventoryData inventoryData;
 
         public Inventory()
         {
-            Items = new List<GameState.ItemData>();
+            inventoryData = LoadInventoryState();
         }
 
         public void AddItem(CollectibleItem item)
@@ -22,24 +22,24 @@ namespace EpicMergeClone.Game.Mechanics.Inventory
                 itemId = item.ItemDataSO.UniqueId
             };
 
-            Items.Add(itemData);
+            inventoryData.Items.Add(itemData);
 
             SaveInventoryState();
         }
 
         public void RemoveItem(CollectibleItem item)
         {
-            var itemData = Items.Find(data => data.itemId == item.ItemDataSO.UniqueId);
-            Items.Remove(itemData);
+            var itemData = inventoryData.Items.Find(data => data.itemId == item.ItemDataSO.UniqueId);
+            inventoryData.Items.Remove(itemData);
 
             SaveInventoryState();
         }
 
         public bool IsContainItem(string itemUniqueId)
         {
-            for (int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < inventoryData.Items.Count; i++)
             {
-                if (Items[i].itemId == itemUniqueId)
+                if (inventoryData.Items[i].itemId == itemUniqueId)
                 {
                     return true;
                 }
@@ -50,17 +50,27 @@ namespace EpicMergeClone.Game.Mechanics.Inventory
 
         public void SaveInventoryState()
         {
-            string jsonString = JsonUtility.ToJson(Items);
+            string jsonString = JsonUtility.ToJson(inventoryData);
 
             PlayerPrefs.SetString(INVENTORY_STATE_PREF_NAME, jsonString);
             PlayerPrefs.Save();
         }
 
-        public List<GameState.ItemData> LoadInventoryState()
+        public InventoryData LoadInventoryState()
         {
-            string jsonString = PlayerPrefs.GetString(INVENTORY_STATE_PREF_NAME);
+            string jsonString = PlayerPrefs.GetString(INVENTORY_STATE_PREF_NAME, "{}");
 
-            return JsonUtility.FromJson<List<GameState.ItemData>>(jsonString);
+            return JsonUtility.FromJson<InventoryData>(jsonString);
+        }
+
+        public class InventoryData
+        {
+            public List<GameState.ItemData> Items;
+
+            public InventoryData()
+            {
+                Items = new List<GameState.ItemData>();
+            }
         }
     }
 }

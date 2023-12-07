@@ -42,7 +42,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
                 var currentCellData = gridData.cells[i];
                 var itemData = m_AllItemDatas.GetItemData(currentCellData.itemData.itemId);
 
-                m_Grid[i].OnItemAdded += SaveState;
+                m_Grid[i].OnCellStateChanged += SaveState;
 
                 if (itemData == null)
                     continue;

@@ -18,8 +18,8 @@ namespace EpicMergeClone.Game.Items
 
         public Cell CurrentCell { get; set; }
 
-        private ItemPoolManager m_ItemPoolManager;
-        private AllItemDatas m_AllItemDatas;
+        protected ItemPoolManager m_ItemPoolManager;
+        protected AllItemDatas m_AllItemDatas;
 
         [Inject]
         public void Construct(ItemPoolManager itemPoolManager,

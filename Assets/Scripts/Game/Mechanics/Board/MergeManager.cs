@@ -18,7 +18,6 @@ namespace EpicMergeClone.Game.Mechanics.Board
             for (int i = 0; i < mergingItems.Count; i++)
             {
                 var currentItem = mergingItems[i];
-                currentItem.CurrentCell.RemoveItem();
                 poolManager.DespawnItem(currentItem);
             }
 

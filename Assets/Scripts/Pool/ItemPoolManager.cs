@@ -59,6 +59,8 @@ namespace EpicMergeClone.Pool
 
         public void DespawnItem(ItemBase item)
         {
+            item.CurrentCell.RemoveItem();
+
             if (item is ProductionItem productionItem)
             {
                 m_ProductionItemPool.Despawn(productionItem);
