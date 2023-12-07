@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Collecitble_ChocolateItem
   m_EditorClassIdentifier: 
   UniqueId: chocolate_collectible
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 232196ebd33d681489535461854864c9, type: 3}

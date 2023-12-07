@@ -15,37 +15,46 @@ namespace EpicMergeClone.Game.Mechanics.Inventory
             inventoryData = LoadInventoryState();
         }
 
-        public void AddItem(CollectibleItem item)
+        public void AddItem(CollectibleItem item, int count = 1)
         {
-            GameState.ItemData itemData = new GameState.ItemData()
+            InventoryItemData itemData = new InventoryItemData()
             {
-                itemId = item.ItemDataSO.UniqueId
+                itemId = item.ItemDataSO.UniqueId,
+                count = count
             };
 
-            inventoryData.Items.Add(itemData);
+            var existingItemData = inventoryData.Items.Find(data => data.itemId == item.ItemDataSO.UniqueId);
+            if (existingItemData != null)
+            {
+                existingItemData.count += count;
+            }
+            else
+            {
+                inventoryData.Items.Add(itemData);
+            }
 
             SaveInventoryState();
         }
 
-        public void RemoveItem(CollectibleItem item)
+        public void RemoveItem(CollectibleItem item, int count = 1)
         {
             var itemData = inventoryData.Items.Find(data => data.itemId == item.ItemDataSO.UniqueId);
-            inventoryData.Items.Remove(itemData);
+            if (itemData != null)
+            {
+                itemData.count -= count;
 
-            SaveInventoryState();
+                if (itemData.count <= 0)
+                {
+                    inventoryData.Items.Remove(itemData);
+                }
+
+                SaveInventoryState();
+            }
         }
 
         public bool IsContainItem(string itemUniqueId)
         {
-            for (int i = 0; i < inventoryData.Items.Count; i++)
-            {
-                if (inventoryData.Items[i].itemId == itemUniqueId)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return inventoryData.Items.Exists(data => data.itemId == itemUniqueId);
         }
 
         public void SaveInventoryState()
@@ -60,17 +69,24 @@ namespace EpicMergeClone.Game.Mechanics.Inventory
         {
             string jsonString = PlayerPrefs.GetString(INVENTORY_STATE_PREF_NAME, "{}");
 
-            return JsonUtility.FromJson<InventoryData>(jsonString);
+            return JsonUtility.FromJson<InventoryData>(jsonString) ?? new InventoryData();
         }
 
         public class InventoryData
         {
-            public List<GameState.ItemData> Items;
+            public List<InventoryItemData> Items;
 
             public InventoryData()
             {
-                Items = new List<GameState.ItemData>();
+                Items = new List<InventoryItemData>();
             }
+        }
+
+        [System.Serializable]
+        public class InventoryItemData
+        {
+            public string itemId;
+            public int count;
         }
     }
 }
