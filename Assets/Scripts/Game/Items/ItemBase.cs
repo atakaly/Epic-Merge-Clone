@@ -1,6 +1,7 @@
 using DG.Tweening;
 using EpicMergeClone.Game.Mechanics.Board;
 using EpicMergeClone.Game.Mechanics.Grid;
+using EpicMergeClone.Installers;
 using EpicMergeClone.Pool;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,14 @@ namespace EpicMergeClone.Game.Items
         public Cell CurrentCell { get; set; }
 
         protected ItemPoolManager m_ItemPoolManager;
-        protected AllItemDatas m_AllItemDatas;
+        protected GlobalGameData m_GlobalGameData;
 
         [Inject]
         public void Construct(ItemPoolManager itemPoolManager,
-            AllItemDatas allItemDatas)
+            GlobalGameData globalGameData)
         {
             m_ItemPoolManager = itemPoolManager;
-            m_AllItemDatas = allItemDatas;
+            m_GlobalGameData = globalGameData;
         }
 
         private void Awake()
@@ -46,6 +47,11 @@ namespace EpicMergeClone.Game.Items
             transform.DOKill(true);
             transform.DOMove(position, duration)
                 .OnComplete(() => onComplete?.Invoke());
+        }
+
+        protected virtual void OnMouseDown()
+        {
+            
         }
 
         private void OnMouseDrag()
@@ -74,7 +80,7 @@ namespace EpicMergeClone.Game.Items
 
             if (mergingItems != null)
             {
-                MergeManager.Merge(mergingItems, m_ItemPoolManager, m_AllItemDatas);
+                MergeManager.Merge(mergingItems, m_ItemPoolManager, m_GlobalGameData.allItemDatas);
             } 
             else
             {

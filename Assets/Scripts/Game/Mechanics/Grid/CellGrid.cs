@@ -1,4 +1,5 @@
 using EpicMergeClone.Game.Items;
+using EpicMergeClone.Installers;
 using EpicMergeClone.Pool;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,14 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 
         private ItemPoolManager m_ItemPoolManager;
 
-        private AllItemDatas m_AllItemDatas;
+        private GlobalGameData m_GlobalGameData;
 
         [Inject]
         public void Construct(ItemPoolManager itemPoolManager,
-            AllItemDatas allItemDatas)
+            GlobalGameData globalGameData)
         {
             m_ItemPoolManager = itemPoolManager;
-            m_AllItemDatas = allItemDatas;
+            m_GlobalGameData = globalGameData;
         }
 
         public void Start()
@@ -40,7 +41,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             for (int i = 0; i < gridData.cells.Length; i++)
             {
                 var currentCellData = gridData.cells[i];
-                var itemData = m_AllItemDatas.GetItemData(currentCellData.itemData.itemId);
+                var itemData = m_GlobalGameData.allItemDatas.GetItemData(currentCellData.itemData.itemId);
 
                 m_Grid[i].OnCellStateChanged += SaveState;
 
