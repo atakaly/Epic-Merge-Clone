@@ -66,7 +66,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             {
                 GameState.ItemData thisCellItemData = new GameState.ItemData()
                 {
-                    itemId = m_Grid[i].CurrentItem == null ? "" : m_Grid[i].CurrentItem.ItemDataSO.UniqueId
+                    itemId = m_Grid[i].CurrentItem == null ? "" : m_Grid[i].CurrentItem.ItemDataSO.ItemId
                 };
 
                 GameState.CellData newCellData = new GameState.CellData()

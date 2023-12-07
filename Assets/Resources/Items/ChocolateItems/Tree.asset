@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a488d4fefa81d468b557492fee0d4e, type: 3}
   m_Name: Tree
   m_EditorClassIdentifier: 
-  UniqueId: chocolate_tree
+  ItemId: chocolate_tree
   itemSprite: {fileID: 21300000, guid: 7e5e45525b6276f478258c16100b3bff, type: 3}
+  ProduceTimeSeconds: 10
+  ProduceAmount: 4
+  ItemToProduce: {fileID: 11400000, guid: 1ebb0cae720bc8a43b20977e2790a24a, type: 2}

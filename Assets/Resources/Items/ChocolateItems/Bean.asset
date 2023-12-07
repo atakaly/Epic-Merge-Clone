@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79310935c98c1ef4397694af55bfa29a, type: 3}
   m_Name: Bean
   m_EditorClassIdentifier: 
-  UniqueId: chocolate_bean
+  ItemId: chocolate_bean
   itemSprite: {fileID: 21300000, guid: 8e5f1469345c3724ab0417eb464000bc, type: 3}

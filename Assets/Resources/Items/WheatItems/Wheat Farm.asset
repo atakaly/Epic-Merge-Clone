@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a488d4fefa81d468b557492fee0d4e, type: 3}
   m_Name: Wheat Farm
   m_EditorClassIdentifier: 
-  UniqueId: wheat_farm_production
+  ItemId: wheat_farm
   itemSprite: {fileID: 0}
+  ProduceTimeSeconds: 10
+  ProduceAmount: 4
+  ItemToProduce: {fileID: 11400000, guid: 1be97e8b2aa8a064b937cbcf28fa1c8f, type: 2}

@@ -19,11 +19,11 @@ namespace EpicMergeClone.Game.Mechanics.Inventory
         {
             InventoryItemData itemData = new InventoryItemData()
             {
-                itemId = item.ItemDataSO.UniqueId,
+                itemId = item.ItemDataSO.ItemId,
                 count = count
             };
 
-            var existingItemData = inventoryData.Items.Find(data => data.itemId == item.ItemDataSO.UniqueId);
+            var existingItemData = inventoryData.Items.Find(data => data.itemId == item.ItemDataSO.ItemId);
             if (existingItemData != null)
             {
                 existingItemData.count += count;
@@ -38,7 +38,7 @@ namespace EpicMergeClone.Game.Mechanics.Inventory
 
         public void RemoveItem(CollectibleItem item, int count = 1)
         {
-            var itemData = inventoryData.Items.Find(data => data.itemId == item.ItemDataSO.UniqueId);
+            var itemData = inventoryData.Items.Find(data => data.itemId == item.ItemDataSO.ItemId);
             if (itemData != null)
             {
                 itemData.count -= count;

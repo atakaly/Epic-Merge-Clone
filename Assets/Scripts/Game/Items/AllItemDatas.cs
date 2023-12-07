@@ -12,7 +12,7 @@ namespace EpicMergeClone.Game.Items
         {
             for (int i = 0; i < itemDatas.Length; i++)
             {
-                if (itemDatas[i].UniqueId == uniqueId)
+                if (itemDatas[i].ItemId == uniqueId)
                     return itemDatas[i];
             }
 

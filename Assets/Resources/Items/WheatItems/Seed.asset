@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79310935c98c1ef4397694af55bfa29a, type: 3}
   m_Name: Seed
   m_EditorClassIdentifier: 
-  UniqueId: wheat_seed
+  ItemId: wheat_seed
   itemSprite: {fileID: 0}
