@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8175006618058792971}
-  - component: {fileID: -6855166725717270002}
+  - component: {fileID: 2977892183322606430}
   - component: {fileID: 8175006618058792968}
   - component: {fileID: 1176867656}
   m_Layer: 0
-  m_Name: CollectibleItem
+  m_Name: OrderItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6855166725717270002
+--- !u!114 &2977892183322606430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +44,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8175006618058792975}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592713c4a601db041a11e2891a423ab5, type: 3}
+  m_Script: {fileID: 11500000, guid: bfdc7251c829faa49804bb99dbd11f0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemDataSO: {fileID: 11400000, guid: 2833c416fec8eb748a23d9e23f25276f, type: 2}
+  ItemDataSO: {fileID: 0}
   m_SpriteRenderer: {fileID: 8175006618367419609}
 --- !u!60 &8175006618058792968
 PolygonCollider2D:

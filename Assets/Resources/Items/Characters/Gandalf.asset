@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63e764c5553b1bc429fdba77eb50e21d, type: 3}
-  m_Name: Cleopatra
+  m_Name: Gandalf
   m_EditorClassIdentifier: 
-  ItemId: cleopatra
-  itemSprite: {fileID: 0}
+  ItemId: gandalf
+  itemSprite: {fileID: 21300000, guid: 9ca49e52e4ae5c543b6edb436463b922, type: 3}
   orders:
   - {fileID: 11400000, guid: 71ffec53ba1c3a64ca8ef0eff55239b6, type: 2}
   - {fileID: 11400000, guid: 488f0ea2ed0f2a74fa3d4b6f61815b56, type: 2}

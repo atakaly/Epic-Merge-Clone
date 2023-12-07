@@ -20,6 +20,14 @@ namespace EpicMergeClone.Installers
                 .WithInitialSize(2)
                 .FromComponentInNewPrefabResource("Prefabs/ProductionItem");
 
+            Container.BindMemoryPool<CharacterItem, GenericItemPool<CharacterItem>>()
+                .WithInitialSize(1)
+                .FromComponentInNewPrefabResource("Prefabs/CharacterItem");
+
+            Container.BindMemoryPool<OrderItem, GenericItemPool<OrderItem>>()
+                .WithInitialSize(2)
+                .FromComponentInNewPrefabResource("Prefabs/OrderItem");
+
             Container.Bind<ItemPoolManager>()
                 .AsSingle();
 
