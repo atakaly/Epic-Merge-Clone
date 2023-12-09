@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GlobalGameData
   m_EditorClassIdentifier: 
   allItemDatas: {fileID: 11400000, guid: dbbe54a848c89bc4490285466c0a1ac1, type: 2}
+  allOrderDatas: {fileID: 11400000, guid: eb9125959cf12bc4fba255b4c7f74b07, type: 2}

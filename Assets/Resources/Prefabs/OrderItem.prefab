@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2283651f0c68142ba7e0af7d771234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseDragTimeThreshold: 0.3
+  mouseDragTimeThreshold: 0.2
 --- !u!60 &8175006618058792968
 PolygonCollider2D:
   m_ObjectHideFlags: 0

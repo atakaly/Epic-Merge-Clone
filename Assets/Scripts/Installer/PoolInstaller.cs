@@ -16,7 +16,7 @@ namespace EpicMergeClone.Installers
                 .WithInitialSize(5)
                 .FromComponentInNewPrefabResource("Prefabs/CollectibleItem");
 
-            Container.BindMemoryPool<ProductionItem, GenericItemPool<ProductionItem>>()
+            Container.BindMemoryPool<IngredientProducerItem, GenericItemPool<IngredientProducerItem>>()
                 .WithInitialSize(2)
                 .FromComponentInNewPrefabResource("Prefabs/ProductionItem");
 

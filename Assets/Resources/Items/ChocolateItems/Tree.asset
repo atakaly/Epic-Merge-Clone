@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0a488d4fefa81d468b557492fee0d4e, type: 3}
+  m_Script: {fileID: 11500000, guid: f1d59fdd0fa99e44b8d7af39ceca6db8, type: 3}
   m_Name: Tree
   m_EditorClassIdentifier: 
   ItemId: chocolate_tree

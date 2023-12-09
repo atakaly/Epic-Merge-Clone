@@ -24,8 +24,6 @@ namespace EpicMergeClone.Game.Items
         protected ItemPoolManager m_ItemPoolManager;
         protected GlobalGameData m_GlobalGameData;
 
-        private bool isDragEnabled = false;
-
         [Inject]
         public void Construct(ItemPoolManager itemPoolManager,
             GlobalGameData globalGameData)

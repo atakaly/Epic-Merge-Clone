@@ -8,14 +8,14 @@ namespace EpicMergeClone.Pool
     {
         private GenericItemPool<ItemBase> m_BaseItemPool;
         private GenericItemPool<CollectibleItem> m_CollectibleItemPool;
-        private GenericItemPool<ProductionItem> m_ProductionItemPool;
+        private GenericItemPool<IngredientProducerItem> m_ProductionItemPool;
         private GenericItemPool<CharacterItem> m_CharacterItemPool;
         private GenericItemPool<OrderItem> m_OrderItemPool;
         
 
         [Inject]
         public void Construct(GenericItemPool<ItemBase> baseItemPool, GenericItemPool<CollectibleItem> collectibleItemPool, 
-            GenericItemPool<ProductionItem> productionItemPool, GenericItemPool<CharacterItem> characterItemPool,
+            GenericItemPool<IngredientProducerItem> productionItemPool, GenericItemPool<CharacterItem> characterItemPool,
             GenericItemPool<OrderItem> orderItemPool)
         {
             m_BaseItemPool = baseItemPool;
@@ -29,7 +29,7 @@ namespace EpicMergeClone.Pool
         {
             ItemBase newItem;
 
-            if (item is ProductionItem)
+            if (item is IngredientProducerItem)
             {
                 newItem = m_ProductionItemPool.Spawn();
             }
@@ -57,7 +57,7 @@ namespace EpicMergeClone.Pool
         {
             ItemBase newItem;
 
-            if (itemData is ProductionItemSO)
+            if (itemData is IngredientProducerItemSO)
             {
                 newItem = m_ProductionItemPool.SpawnItem(itemData);
             }
@@ -85,7 +85,7 @@ namespace EpicMergeClone.Pool
         {
             item.CurrentCell.RemoveItem();
 
-            if (item is ProductionItem productionItem)
+            if (item is IngredientProducerItem productionItem)
             {
                 m_ProductionItemPool.Despawn(productionItem);
             }

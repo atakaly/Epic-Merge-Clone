@@ -15,5 +15,5 @@ MonoBehaviour:
   ItemId: someone
   itemSprite: {fileID: 0}
   orders:
-  - {fileID: 11400000, guid: f507fc7025dbcc443a0fce6928bc77e2, type: 2}
-  - {fileID: 11400000, guid: 71ffec53ba1c3a64ca8ef0eff55239b6, type: 2}
+  - {fileID: 11400000, guid: 0a430846e2b4e3047ae2582d11efcaad, type: 2}
+  - {fileID: 11400000, guid: 6e25f0c6bf9612c4d9c7129cb87d2245, type: 2}
