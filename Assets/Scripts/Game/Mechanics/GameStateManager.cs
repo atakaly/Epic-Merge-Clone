@@ -1,5 +1,6 @@
 using EpicMergeClone.Game.Player;
 using EpicMergeClone.UI;
+using EpicMergeClone.Utils;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -136,18 +137,12 @@ namespace EpicMergeClone.Game.Mechanics
 
         private DateTime GetLastEnergyUpdateTime()
         {
-            var lastUpdateTimeString = PlayerPrefs.GetString(LAST_ENERGY_UPDATE_TIME_PREF_NAME, DateTime.UtcNow.ToString());
-            if(DateTime.TryParse(lastUpdateTimeString, out DateTime lastUpdateTime))
-            {
-                return lastUpdateTime;
-            }
-            return DateTime.UtcNow;
+            return PlayerPrefsStorage.GetDateTime(LAST_ENERGY_UPDATE_TIME_PREF_NAME, DateTime.UtcNow);
         }
 
         private void SetLastEnergyUpdateTime(DateTime time)
         {
-            PlayerPrefs.SetString(LAST_ENERGY_UPDATE_TIME_PREF_NAME, time.ToString());
-            PlayerPrefs.Save();
+            PlayerPrefsStorage.SetDateTime(LAST_ENERGY_UPDATE_TIME_PREF_NAME, time);
         }
 
         private IEnumerator IncrementEnergyCoroutine()
@@ -160,7 +155,6 @@ namespace EpicMergeClone.Game.Mechanics
                 {
                     if (DateTime.UtcNow - lastEnergyUpdateTime >= TimeSpan.FromSeconds(ENERGY_INCREMENT_INTERVAL_SECONDS))
                     {
-                        Debug.Log("Energy Incremented");
                         m_PlayerData.CurrentEnergy++;
                         OnPlayerDataUpdate();
                         lastEnergyUpdateTime = DateTime.UtcNow;

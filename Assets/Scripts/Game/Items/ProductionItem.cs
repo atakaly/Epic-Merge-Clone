@@ -1,4 +1,5 @@
 using EpicMergeClone.Game.Mechanics.Grid;
+using EpicMergeClone.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,24 +69,23 @@ namespace EpicMergeClone.Game.Items
         {
             if (m_CurrentEnergy != 0) return;
 
-            PlayerPrefs.DeleteKey(PRODUCTION_PREF_PREFIX + ItemData.ItemId + CurrentCell.ToString() + PRODUCTION_PREF_SUFFIX);
+            PlayerPrefsStorage.DeleteKey(PRODUCTION_PREF_PREFIX + ItemData.ItemId + CurrentCell.ToString() + PRODUCTION_PREF_SUFFIX);
             m_ItemPoolManager.DespawnItem(this);
         }
 
         private int CurrentRequiredPlayerEnergy()
         {
-            Debug.Log(ItemData.PlayerEnergyRequiresForClear.Length - m_CurrentEnergy);
             return ItemData.PlayerEnergyRequiresForClear[ItemData.PlayerEnergyRequiresForClear.Length - m_CurrentEnergy];
         }
 
         private void SaveState()
         {
-            PlayerPrefs.SetInt(PRODUCTION_PREF_PREFIX + ItemData.ItemId + CurrentCell.ToString() + PRODUCTION_PREF_SUFFIX, m_CurrentEnergy);
+            PlayerPrefsStorage.SetInt(PRODUCTION_PREF_PREFIX + ItemData.ItemId + CurrentCell.ToString() + PRODUCTION_PREF_SUFFIX, m_CurrentEnergy);
         }
 
         private int LoadEnergyState()
         {
-            return PlayerPrefs.GetInt(PRODUCTION_PREF_PREFIX + ItemData.ItemId + CurrentCell.ToString() + PRODUCTION_PREF_SUFFIX, ItemData.ItemEnergy);
+            return PlayerPrefsStorage.GetInt(PRODUCTION_PREF_PREFIX + ItemData.ItemId + CurrentCell.ToString() + PRODUCTION_PREF_SUFFIX, ItemData.ItemEnergy);
         }
     }
 }
