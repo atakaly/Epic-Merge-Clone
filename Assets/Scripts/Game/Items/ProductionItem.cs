@@ -27,6 +27,8 @@ namespace EpicMergeClone.Game.Items
 
         public void Clear()
         {
+            //if(m_GameStateManager.CurrentEnergy )
+
             if(m_GameStateManager.CurrentEnergy < CurrentRequiredPlayerEnergy())
             {
                 Debug.Log("You don't have sufficient energy");
@@ -39,11 +41,12 @@ namespace EpicMergeClone.Game.Items
                 return;
             }
 
-            m_CurrentEnergy--;
             m_GameStateManager.CurrentEnergy -= CurrentRequiredPlayerEnergy();
+            m_CurrentEnergy--;
 
             CreateItems();
             SaveState();
+            TryDespawn();
         }
 
         private void CreateItems()
@@ -63,8 +66,17 @@ namespace EpicMergeClone.Game.Items
             }
         }
 
+        private void TryDespawn()
+        {
+            if (m_CurrentEnergy != 0) return;
+
+            PlayerPrefs.DeleteKey(PRODUCTION_PREF_PREFIX + ItemData.ItemId + CurrentCell.ToString() + PRODUCTION_PREF_SUFFIX);
+            m_ItemPoolManager.DespawnItem(this);
+        }
+
         private int CurrentRequiredPlayerEnergy()
         {
+            Debug.Log(ItemData.PlayerEnergyRequiresForClear.Length - m_CurrentEnergy);
             return ItemData.PlayerEnergyRequiresForClear[ItemData.PlayerEnergyRequiresForClear.Length - m_CurrentEnergy];
         }
 
