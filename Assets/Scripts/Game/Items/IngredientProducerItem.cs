@@ -15,7 +15,6 @@ namespace EpicMergeClone.Game.Items
 
         private void Start()
         {
-            Debug.Log(Guid.NewGuid().ToString());
             //StartProduce();
         }
 

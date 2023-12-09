@@ -11,6 +11,10 @@ namespace EpicMergeClone.Installers
         {
             PoolInstaller.Install(Container);
 
+            Container.Bind<GameStateManager>()
+                .FromComponentInHierarchy()
+                .AsSingle();
+
             Container.Bind<BoardManager>()
                 .FromComponentInHierarchy()
                 .AsSingle();
@@ -18,8 +22,6 @@ namespace EpicMergeClone.Installers
             Container.Bind<Inventory>()
                 .AsSingle();
 
-            Container.Bind<GameStateManager>()
-                .AsSingle();
         }
     }
 }

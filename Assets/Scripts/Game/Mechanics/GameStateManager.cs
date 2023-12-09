@@ -1,13 +1,21 @@
 using EpicMergeClone.Game.Player;
 using System;
+using System.Collections;
+using UnityEngine;
 
 namespace EpicMergeClone.Game.Mechanics
 {
-    public class GameStateManager
+    public class GameStateManager : MonoBehaviour
     {
+        public const string LAST_ENERGY_UPDATE_TIME_PREF_NAME = "LastEnergyUpdateTime";
+        private const float ENERGY_INCREMENT_INTERVAL_SECONDS = 2f;
+
         public event Action OnStateUpdate;
 
         private PlayerData m_PlayerData;
+
+        private DateTime lastEnergyUpdateTime;
+        private WaitForSeconds waitTime;
 
         public int Level
         {
@@ -100,9 +108,54 @@ namespace EpicMergeClone.Game.Mechanics
             }
         }
 
-        public GameStateManager()
+        public void Awake()
         {
             m_PlayerData = GameState.LoadPlayerData();
+
+            TimeSpan timePassed = DateTime.UtcNow - GetLastEnergyUpdateTime();
+            int increments = Mathf.FloorToInt((float)timePassed.TotalSeconds / ENERGY_INCREMENT_INTERVAL_SECONDS);
+            m_PlayerData.CurrentEnergy += increments;
+            m_PlayerData.CurrentEnergy = Mathf.Min(m_PlayerData.CurrentEnergy, m_PlayerData.MaxEnergy);
+
+            SetLastEnergyUpdateTime(DateTime.UtcNow);
+            waitTime = new WaitForSeconds(ENERGY_INCREMENT_INTERVAL_SECONDS);
+            StartCoroutine(IncrementEnergyCoroutine());
+        }
+
+        private DateTime GetLastEnergyUpdateTime()
+        {
+            var lastUpdateTimeString = PlayerPrefs.GetString(LAST_ENERGY_UPDATE_TIME_PREF_NAME, DateTime.UtcNow.ToString());
+            if(DateTime.TryParse(lastUpdateTimeString, out DateTime lastUpdateTime))
+            {
+                return lastUpdateTime;
+            }
+            return DateTime.UtcNow;
+        }
+
+        private void SetLastEnergyUpdateTime(DateTime time)
+        {
+            PlayerPrefs.SetString(LAST_ENERGY_UPDATE_TIME_PREF_NAME, time.ToString());
+            PlayerPrefs.Save();
+        }
+
+        private IEnumerator IncrementEnergyCoroutine()
+        {
+            while (true)
+            {
+                yield return waitTime;
+
+                if (m_PlayerData.CurrentEnergy < m_PlayerData.MaxEnergy)
+                {
+                    if (DateTime.UtcNow - lastEnergyUpdateTime >= TimeSpan.FromSeconds(ENERGY_INCREMENT_INTERVAL_SECONDS))
+                    {
+                        Debug.Log("Energy Incremented");
+                        m_PlayerData.CurrentEnergy++;
+                        OnPlayerDataUpdate();
+                        lastEnergyUpdateTime = DateTime.UtcNow;
+                        SetLastEnergyUpdateTime(lastEnergyUpdateTime);
+                    }
+                }
+            }
         }
 
         private void OnPlayerDataUpdate()
