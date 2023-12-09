@@ -101,5 +101,10 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 
             return null;
         }
+
+        public override string ToString()
+        {
+            return ("Cell_" + m_X.ToString() + "_" + m_Y.ToString());
+        }
     }
 }

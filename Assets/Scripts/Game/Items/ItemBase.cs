@@ -40,7 +40,7 @@ namespace EpicMergeClone.Game.Items
             m_ItemInputHandler.OnDragged += OnDragged;
         }
 
-        public void InitializeItem(ItemDataSO itemData)
+        public virtual void InitializeItem(ItemDataSO itemData)
         {
             ItemDataSO = itemData;
 
