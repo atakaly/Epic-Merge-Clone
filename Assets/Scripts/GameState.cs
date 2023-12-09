@@ -1,5 +1,6 @@
 using EpicMergeClone.Game.Mechanics.Grid;
 using EpicMergeClone.Game.Player;
+using EpicMergeClone.Utils;
 using UnityEngine;
 
 namespace EpicMergeClone
@@ -34,13 +35,12 @@ namespace EpicMergeClone
         {
             string jsonString = JsonUtility.ToJson(gridData);
 
-            PlayerPrefs.SetString(GRID_STATE_PREF_NAME, jsonString);
-            PlayerPrefs.Save();
+            PlayerPrefsStorage.SetString(GRID_STATE_PREF_NAME, jsonString);
         }
 
         public static GridData LoadGridData()
         {
-            string jsonString = PlayerPrefs.GetString(GRID_STATE_PREF_NAME);
+            string jsonString = PlayerPrefsStorage.GetString(GRID_STATE_PREF_NAME);
 
             if (string.IsNullOrEmpty(jsonString))
                 return new GridData();
@@ -52,13 +52,12 @@ namespace EpicMergeClone
         {
             string jsonString = JsonUtility.ToJson(playerState);
 
-            PlayerPrefs.SetString(PLAYER_STATE_PREF_NAME, jsonString);
-            PlayerPrefs.Save();
+            PlayerPrefsStorage.SetString(PLAYER_STATE_PREF_NAME, jsonString);
         }
 
         public static PlayerData LoadPlayerData()
         {
-            string jsonString = PlayerPrefs.GetString(PLAYER_STATE_PREF_NAME);
+            string jsonString = PlayerPrefsStorage.GetString(PLAYER_STATE_PREF_NAME);
 
             if (string.IsNullOrEmpty(jsonString))
                 return new PlayerData();
