@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8175006618058792971}
-  - component: {fileID: 1573764534614322672}
+  - component: {fileID: 3444437182661179348}
   - component: {fileID: -4456317965737592035}
   - component: {fileID: 8175006618058792968}
   - component: {fileID: 1176867656}
   m_Layer: 0
-  m_Name: ProductionItem
+  m_Name: IngredientProducerItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1573764534614322672
+--- !u!114 &3444437182661179348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8175006618058792975}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ea01940a4ce0bf41acc3ad4dfc63d51, type: 3}
+  m_Script: {fileID: 11500000, guid: a6d229021dce08d49b9fbfc428dacefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ItemDataSO: {fileID: 0}
@@ -62,7 +62,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2283651f0c68142ba7e0af7d771234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDrag: 0
   mouseDragTimeThreshold: 0.2
 --- !u!60 &8175006618058792968
 PolygonCollider2D:

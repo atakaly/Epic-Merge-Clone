@@ -74,6 +74,32 @@ namespace EpicMergeClone.Game.Mechanics
             }
         }
 
+        public int CurrentWorkers
+        {
+            get
+            {
+                return m_PlayerData.CurrentWorkerCount;
+            }
+            set
+            {
+                m_PlayerData.CurrentWorkerCount = value;
+                OnPlayerDataUpdate();
+            }
+        }
+
+        public int MaxWorkers
+        {
+            get
+            {
+                return m_PlayerData.MaxWorkerCount;
+            }
+            set
+            {
+                m_PlayerData.MaxWorkerCount = value;
+                OnPlayerDataUpdate();
+            }
+        }
+
         public GameStateManager()
         {
             m_PlayerData = GameState.LoadPlayerData();

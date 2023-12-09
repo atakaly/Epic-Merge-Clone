@@ -15,4 +15,7 @@ MonoBehaviour:
   ItemId: wheat_seed_production
   itemSprite: {fileID: 0}
   ItemEnergy: 4
-  ClearEnergyRequires: 
+  PlayerEnergyRequiresForClear: 050000000a0000000f00000014000000
+  ItemsToCreate:
+  - {fileID: 11400000, guid: b9e797b596c26e74083e03a996090583, type: 2}
+  - {fileID: 11400000, guid: e30c7d5d9a39a574ca152ea4a582c91e, type: 2}

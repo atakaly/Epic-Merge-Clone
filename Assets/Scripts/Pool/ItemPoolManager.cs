@@ -1,6 +1,5 @@
 using EpicMergeClone.Game.Items;
 using Zenject;
-using static UnityEditor.Progress;
 
 namespace EpicMergeClone.Pool
 {
@@ -8,18 +7,20 @@ namespace EpicMergeClone.Pool
     {
         private GenericItemPool<ItemBase> m_BaseItemPool;
         private GenericItemPool<CollectibleItem> m_CollectibleItemPool;
-        private GenericItemPool<IngredientProducerItem> m_ProductionItemPool;
+        private GenericItemPool<IngredientProducerItem> m_IngredientProductionItemPool;
         private GenericItemPool<CharacterItem> m_CharacterItemPool;
         private GenericItemPool<OrderItem> m_OrderItemPool;
+        private GenericItemPool<ProductionItem> m_ProductionItemPool;
         
 
         [Inject]
         public void Construct(GenericItemPool<ItemBase> baseItemPool, GenericItemPool<CollectibleItem> collectibleItemPool, 
-            GenericItemPool<IngredientProducerItem> productionItemPool, GenericItemPool<CharacterItem> characterItemPool,
-            GenericItemPool<OrderItem> orderItemPool)
+            GenericItemPool<IngredientProducerItem> ingredientProductionItemPool, GenericItemPool<CharacterItem> characterItemPool,
+            GenericItemPool<OrderItem> orderItemPool, GenericItemPool<ProductionItem> productionItemPool)
         {
             m_BaseItemPool = baseItemPool;
             m_CollectibleItemPool = collectibleItemPool;
+            m_IngredientProductionItemPool = ingredientProductionItemPool;
             m_ProductionItemPool = productionItemPool;
             m_CharacterItemPool = characterItemPool;
             m_OrderItemPool = orderItemPool;
@@ -31,7 +32,7 @@ namespace EpicMergeClone.Pool
 
             if (item is IngredientProducerItem)
             {
-                newItem = m_ProductionItemPool.Spawn();
+                newItem = m_IngredientProductionItemPool.Spawn();
             }
             else if (item is CollectibleItem)
             {
@@ -44,6 +45,10 @@ namespace EpicMergeClone.Pool
             else if (item is CharacterItem)
             {
                 newItem = m_CharacterItemPool.Spawn();
+            }
+            else if (item is ProductionItem)
+            {
+                newItem = m_ProductionItemPool.Spawn();
             }
             else
             {
@@ -59,7 +64,7 @@ namespace EpicMergeClone.Pool
 
             if (itemData is IngredientProducerItemSO)
             {
-                newItem = m_ProductionItemPool.SpawnItem(itemData);
+                newItem = m_IngredientProductionItemPool.SpawnItem(itemData);
             }
             else if (itemData is CollectibleItemSO)
             {
@@ -73,6 +78,10 @@ namespace EpicMergeClone.Pool
             {
                 newItem = m_CharacterItemPool.SpawnItem(itemData);
             }
+            else if (itemData is ProductionItemSO)
+            {
+                newItem = m_ProductionItemPool.SpawnItem(itemData);
+            }
             else
             {
                 newItem = m_BaseItemPool.SpawnItem(itemData);
@@ -85,7 +94,11 @@ namespace EpicMergeClone.Pool
         {
             item.CurrentCell.RemoveItem();
 
-            if (item is IngredientProducerItem productionItem)
+            if (item is IngredientProducerItem ingredientProductionItem)
+            {
+                m_IngredientProductionItemPool.Despawn(ingredientProductionItem);
+            }
+            else if (item is ProductionItem productionItem)
             {
                 m_ProductionItemPool.Despawn(productionItem);
             }

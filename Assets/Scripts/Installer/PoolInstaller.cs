@@ -18,7 +18,7 @@ namespace EpicMergeClone.Installers
 
             Container.BindMemoryPool<IngredientProducerItem, GenericItemPool<IngredientProducerItem>>()
                 .WithInitialSize(2)
-                .FromComponentInNewPrefabResource("Prefabs/ProductionItem");
+                .FromComponentInNewPrefabResource("Prefabs/IngredientProducerItem");
 
             Container.BindMemoryPool<CharacterItem, GenericItemPool<CharacterItem>>()
                 .WithInitialSize(1)
@@ -27,6 +27,10 @@ namespace EpicMergeClone.Installers
             Container.BindMemoryPool<OrderItem, GenericItemPool<OrderItem>>()
                 .WithInitialSize(2)
                 .FromComponentInNewPrefabResource("Prefabs/OrderItem");
+
+            Container.BindMemoryPool<ProductionItem, GenericItemPool<ProductionItem>>()
+                .WithInitialSize(2)
+                .FromComponentInNewPrefabResource("Prefabs/ProductionItem");
 
             Container.Bind<ItemPoolManager>()
                 .AsSingle();

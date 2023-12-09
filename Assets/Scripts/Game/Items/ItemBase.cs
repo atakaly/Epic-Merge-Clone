@@ -1,4 +1,5 @@
 using DG.Tweening;
+using EpicMergeClone.Game.Mechanics;
 using EpicMergeClone.Game.Mechanics.Board;
 using EpicMergeClone.Game.Mechanics.Grid;
 using EpicMergeClone.Installers;
@@ -23,13 +24,16 @@ namespace EpicMergeClone.Game.Items
 
         protected ItemPoolManager m_ItemPoolManager;
         protected GlobalGameData m_GlobalGameData;
+        protected GameStateManager m_GameStateManager;
 
         [Inject]
         public void Construct(ItemPoolManager itemPoolManager,
-            GlobalGameData globalGameData)
+            GlobalGameData globalGameData,
+            GameStateManager gameStateManager)
         {
             m_ItemPoolManager = itemPoolManager;
             m_GlobalGameData = globalGameData;
+            m_GameStateManager = gameStateManager;
         }
 
         private void Start()
@@ -45,6 +49,11 @@ namespace EpicMergeClone.Game.Items
             ItemDataSO = itemData;
 
             m_SpriteRenderer.sprite = itemData.itemSprite;
+        }
+
+        public virtual void LateInitialize()
+        {
+
         }
 
         public void Move(Vector3 position, float duration, Action onComplete = null)
@@ -112,8 +121,9 @@ namespace EpicMergeClone.Game.Items
 
         private void OnDestroy()
         {
+            /*
             m_ItemInputHandler.OnClick -= OnClick;
-            m_ItemInputHandler.OnDragged -= OnDragged;
+            m_ItemInputHandler.OnDragged -= OnDragged;*/
         }
     }
 }

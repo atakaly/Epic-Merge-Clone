@@ -1,3 +1,5 @@
+using EpicMergeClone.Game.Mechanics.Grid;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EpicMergeClone.Game.Items
@@ -10,19 +12,60 @@ namespace EpicMergeClone.Game.Items
 
         private int m_CurrentEnergy;
 
-        public override void InitializeItem(ItemDataSO itemData)
+        public override void LateInitialize()
         {
-            base.InitializeItem(itemData);
+            base.LateInitialize();
 
             m_CurrentEnergy = LoadEnergyState();
         }
 
+        protected override void OnClick()
+        {
+            base.OnClick();
+            Clear();
+        }
+
         public void Clear()
         {
-            //Check for current energy && worker, if sufficient, clear and attach the worker.
-            m_CurrentEnergy--;
+            if(m_GameStateManager.CurrentEnergy < CurrentRequiredPlayerEnergy())
+            {
+                Debug.Log("You don't have sufficient energy");
+                return;
+            }
 
+            if(m_GameStateManager.CurrentWorkers <= 0)
+            {
+                Debug.Log("You don't have available worker.");
+                return;
+            }
+
+            m_CurrentEnergy--;
+            m_GameStateManager.CurrentEnergy -= CurrentRequiredPlayerEnergy();
+
+            CreateItems();
             SaveState();
+        }
+
+        private void CreateItems()
+        {
+            var itemsToCreate = ItemData.ItemsToCreate;
+            int randomNumberOfItems = Random.Range(4, 6);
+
+            List<Cell> visitedCells = new List<Cell>();
+
+            for (int i = 0; i < randomNumberOfItems; i++)
+            {
+                int randomItemIndex = Random.Range(0, itemsToCreate.Length);
+                var newItem = m_ItemPoolManager.SpawnItem(itemsToCreate[randomItemIndex]);
+                var cell = CurrentCell.GetFirstAvailableNeighbour(visitedCells);
+
+                cell.AddItem(newItem);
+            }
+        }
+
+        private int CurrentRequiredPlayerEnergy()
+        {
+            return ItemData.PlayerEnergyRequiresForClear[ItemData.PlayerEnergyRequiresForClear.Length - m_CurrentEnergy];
         }
 
         private void SaveState()
@@ -32,7 +75,7 @@ namespace EpicMergeClone.Game.Items
 
         private int LoadEnergyState()
         {
-            return PlayerPrefs.GetInt(PRODUCTION_PREF_PREFIX + ItemData.ItemId + CurrentCell.ToString() + PRODUCTION_PREF_SUFFIX);
+            return PlayerPrefs.GetInt(PRODUCTION_PREF_PREFIX + ItemData.ItemId + CurrentCell.ToString() + PRODUCTION_PREF_SUFFIX, ItemData.ItemEnergy);
         }
     }
 }

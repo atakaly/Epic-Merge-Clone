@@ -10,12 +10,16 @@ namespace EpicMergeClone.Game.Player
         public int CurrentEnergy;
         public int MaxEnergy;
 
+        public int CurrentWorkerCount;
+        public int MaxWorkerCount;
+
         public PlayerData()
         {
             Level = 1;
             Experience = 0;
             Coin = 100;
             MaxEnergy = CurrentEnergy = 100;
+            MaxWorkerCount = CurrentWorkerCount = 2;
         }
     }
 }

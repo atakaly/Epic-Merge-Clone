@@ -23,8 +23,11 @@ namespace EpicMergeClone.Game.Items
         {
             for (int i = 0; i < itemTrees.Length; i++)
             {
-                if (itemTrees[i].GetItemDataAt(i) == itemData)
-                    return itemTrees[i];
+                for (int j = 0; j < itemTrees[i].items.Length; j++)
+                {
+                    if (itemTrees[i].GetItemDataAt(j).ItemId == itemData.ItemId)
+                        return itemTrees[i];
+                }
             }
 
             return null;

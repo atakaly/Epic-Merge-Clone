@@ -1,3 +1,4 @@
+using EpicMergeClone.Game.Mechanics;
 using EpicMergeClone.Game.Mechanics.Board;
 using EpicMergeClone.Game.Mechanics.Inventory;
 using Zenject;
@@ -15,6 +16,9 @@ namespace EpicMergeClone.Installers
                 .AsSingle();
 
             Container.Bind<Inventory>()
+                .AsSingle();
+
+            Container.Bind<GameStateManager>()
                 .AsSingle();
         }
     }

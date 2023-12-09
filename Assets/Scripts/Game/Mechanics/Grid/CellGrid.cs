@@ -47,6 +47,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
                     continue;
 
                 m_Cells[i].AddItem(m_ItemPoolManager.SpawnItem(itemData));
+                m_Cells[i].CurrentItem.LateInitialize();
             }
         }
 

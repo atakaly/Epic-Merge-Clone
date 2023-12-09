@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: ChocolateBeanProducer
   m_EditorClassIdentifier: 
   ItemId: chocolate_bean_production
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 8333e3a89540cb84cabd322edb04c88a, type: 3}
   ItemEnergy: 4
+  PlayerEnergyRequiresForClear: 050000000a0000000f00000019000000
+  ItemsToCreate:
+  - {fileID: 11400000, guid: 2833c416fec8eb748a23d9e23f25276f, type: 2}
+  - {fileID: 11400000, guid: 8f11eae24c38dca4a8d49cf9c58019f5, type: 2}

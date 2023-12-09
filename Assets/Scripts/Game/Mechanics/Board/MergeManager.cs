@@ -21,11 +21,11 @@ namespace EpicMergeClone.Game.Mechanics.Board
                 poolManager.DespawnItem(currentItem);
             }
 
-            var itemTreeSO = allItemsData.GetItemTreeOf(targetItem.ItemDataSO);
+            var targetItemTreeSO = allItemsData.GetItemTreeOf(targetItem.ItemDataSO);
             
             ItemBase newItem = poolManager.SpawnItem(targetItem);
             targetCell.AddItem(newItem);
-            newItem.InitializeItem(itemTreeSO.GetNextItemData(targetItemData));
+            newItem.InitializeItem(targetItemTreeSO.GetNextItemData(targetItemData));
         }
 
         public static List<ItemBase> TryGetMergeItems(ItemBase currentItem, ItemBase targetItem)

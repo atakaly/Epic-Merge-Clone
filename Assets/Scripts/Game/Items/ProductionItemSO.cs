@@ -7,5 +7,7 @@ namespace EpicMergeClone.Game.Items
     {
         public int ItemEnergy = 4;
         public int[] PlayerEnergyRequiresForClear;
+
+        public ItemDataSO[] ItemsToCreate;
     }
 }

@@ -8,6 +8,7 @@ namespace EpicMergeClone.Game.Items
         public event Action OnClick;
         public event Action OnDragged;
 
+        [SerializeField] private bool canDrag = true;
         [SerializeField] private float mouseDragTimeThreshold = 0.3f;
 
         private float mouseDownTime;
@@ -19,6 +20,9 @@ namespace EpicMergeClone.Game.Items
 
         private void OnMouseDrag()
         {
+            if (!canDrag)
+                return;
+
             if (mouseDownTime + mouseDragTimeThreshold < Time.time)
             {
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
@@ -34,6 +38,9 @@ namespace EpicMergeClone.Game.Items
                 OnClick?.Invoke();
                 return;
             }
+
+            if (!canDrag)
+                return;
 
             mouseDownTime = 0f;
             OnDragged?.Invoke();
