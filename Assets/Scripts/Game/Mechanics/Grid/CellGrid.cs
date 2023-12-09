@@ -1,7 +1,5 @@
-using EpicMergeClone.Game.Items;
 using EpicMergeClone.Installers;
 using EpicMergeClone.Pool;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -10,12 +8,12 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 {
     public class CellGrid : MonoBehaviour
     {
-        [SerializeField] private List<Cell> m_Grid;
+        public List<Cell> m_Cells;
 
-        [SerializeField] private int width;
-        [SerializeField] private int heigth;
+        public int width;
+        public int heigth;
 
-        [SerializeField] private Cell cellPrefab;
+        public Cell cellPrefab;
 
         private ItemPoolManager m_ItemPoolManager;
 
@@ -43,12 +41,12 @@ namespace EpicMergeClone.Game.Mechanics.Grid
                 var currentCellData = gridData.cells[i];
                 var itemData = m_GlobalGameData.allItemDatas.GetItemData(currentCellData.itemData.itemId);
 
-                m_Grid[i].OnCellStateChanged += SaveState;
+                m_Cells[i].OnCellStateChanged += SaveState;
 
                 if (itemData == null)
                     continue;
 
-                m_Grid[i].AddItem(m_ItemPoolManager.SpawnItem(itemData));
+                m_Cells[i].AddItem(m_ItemPoolManager.SpawnItem(itemData));
             }
         }
 
@@ -63,19 +61,19 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 
             List<GameState.CellData> currentCellDatas = new List<GameState.CellData>();
 
-            for (int i = 0; i < m_Grid.Count; i++)
+            for (int i = 0; i < m_Cells.Count; i++)
             {
                 GameState.ItemData thisCellItemData = new GameState.ItemData()
                 {
-                    itemId = m_Grid[i].CurrentItem == null ? "" : m_Grid[i].CurrentItem.ItemDataSO.ItemId
+                    itemId = m_Cells[i].CurrentItem == null ? "" : m_Cells[i].CurrentItem.ItemDataSO.ItemId
                 };
 
                 GameState.CellData newCellData = new GameState.CellData()
                 {
                     itemData = thisCellItemData,
-                    x = m_Grid[i].X,
-                    y = m_Grid[i].Y,
-                    state = m_Grid[i].State
+                    x = m_Cells[i].X,
+                    y = m_Cells[i].Y,
+                    state = m_Cells[i].State
                 };
 
                 currentCellDatas.Add(newCellData);
@@ -88,42 +86,17 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 
         #region Editor Utilities
 
-        public void CreateGrid()
+
+        public void SetNeighbours()
         {
-            float cellWidth = 1.2f;
-            float cellHeight = .27f;
-
-            for (int i = 0; i < width; i++)
-            {
-                for (int j = 0; j < heigth; j++)
-                {
-                    float xPos = i * cellWidth;
-                    float yPos = j * cellHeight;
-
-                    xPos += (j % 2 == 1) ? cellWidth * 0.5f : 0;
-
-                    var newCell = Instantiate(cellPrefab, new Vector3(xPos, yPos, 0), Quaternion.identity, transform);
-                    newCell.X = i;
-                    newCell.Y = j;
-                    newCell.State = CellState.Available;
-
-                    m_Grid.Add(newCell);
-                }
-            }
-
-            SetNeighbours();
-        }
-
-        private void SetNeighbours()
-        {
-            foreach (Cell cell in m_Grid)
+            foreach (Cell cell in m_Cells)
             {
                 cell.NeighbourCells.Clear();
 
                 int currentX = cell.X;
                 int currentY = cell.Y;
 
-                foreach (Cell otherCell in m_Grid)
+                foreach (Cell otherCell in m_Cells)
                 {
                     int otherX = otherCell.X;
                     int otherY = otherCell.Y;

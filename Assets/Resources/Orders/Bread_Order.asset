@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc31b1e2bd65f55448d51a20d926118f, type: 3}
+  m_Script: {fileID: 11500000, guid: 77f5c4eacfcb228438fe5e907d167c92, type: 3}
   m_Name: Bread_Order
   m_EditorClassIdentifier: 
-  OrderId: bread_order
-  OrderName: Bread
-  Orders:
-  - Item: {fileID: 11400000, guid: 1be97e8b2aa8a064b937cbcf28fa1c8f, type: 2}
-    Count: 2
+  OrderId: 
+  OrderName: 
+  OrderSprite: {fileID: 0}
+  OrderIngredients: []
+  Rewards: []

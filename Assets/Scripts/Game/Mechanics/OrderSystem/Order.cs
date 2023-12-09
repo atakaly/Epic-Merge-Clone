@@ -1,12 +1,17 @@
 using EpicMergeClone.Game.Items;
-using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace EpicMergeClone.Game.Mechanics.Order
+namespace EpicMergeClone.Game.Mechanics.OrderSystem
 {
-    [Serializable]
-    public class Order
+    [CreateAssetMenu(menuName = "Orders/New Order")]
+    public class Order : ScriptableObject
     {
-        public ItemDataSO Item;
-        public int Count;
+        public string OrderId;
+        public string OrderName;
+        public Sprite OrderSprite;
+
+        public List<OrderIngredient> OrderIngredients;
+        public List<ItemDataSO> Rewards;
     }
 }

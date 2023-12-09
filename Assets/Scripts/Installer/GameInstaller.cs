@@ -1,3 +1,4 @@
+using EpicMergeClone.Game.Mechanics.Board;
 using EpicMergeClone.Game.Mechanics.Inventory;
 using Zenject;
 
@@ -9,7 +10,12 @@ namespace EpicMergeClone.Installers
         {
             PoolInstaller.Install(Container);
 
-            Container.Bind<Inventory>().AsSingle();
+            Container.Bind<BoardManager>()
+                .FromComponentInHierarchy()
+                .AsSingle();
+
+            Container.Bind<Inventory>()
+                .AsSingle();
         }
     }
 }

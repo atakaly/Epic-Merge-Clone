@@ -1,13 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace EpicMergeClone.Game.Mechanics.Order
+namespace EpicMergeClone.Game.Mechanics.OrderSystem
 {
     [CreateAssetMenu(menuName = "Orders/Orders Data")]
     public class OrdersDataSO : ScriptableObject
     {
-        public OrderGroup[] orderGroups;
+        public Order[] orderGroups;
 
-        public OrderGroup GetOrderGroup(string id)
+        public Order GetOrder(string id)
         {
             for (int i = 0; i < orderGroups.Length; i++)
             {
@@ -16,6 +17,13 @@ namespace EpicMergeClone.Game.Mechanics.Order
             }
 
             return null;
+        }
+
+        public List<Order> GetCurrentOrders() 
+        {
+            List<Order> orders = new List<Order>();
+
+            return orders;
         }
     }
 }

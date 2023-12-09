@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc31b1e2bd65f55448d51a20d926118f, type: 3}
+  m_Script: {fileID: 11500000, guid: 77f5c4eacfcb228438fe5e907d167c92, type: 3}
   m_Name: Hot Chocolate_Order
   m_EditorClassIdentifier: 
   OrderId: hot_chocolate_order
   OrderName: Hot Chocolate
-  Orders:
+  OrderSprite: {fileID: 0}
+  OrderIngredients:
   - Item: {fileID: 11400000, guid: 1ebb0cae720bc8a43b20977e2790a24a, type: 2}
     Count: 2
+  Rewards: []

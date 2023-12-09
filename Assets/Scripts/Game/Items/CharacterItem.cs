@@ -1,4 +1,5 @@
-using EpicMergeClone.Game.Mechanics.Order;
+using EpicMergeClone.Game.Mechanics.OrderSystem;
+using EpicMergeClone.UI.OrderUI;
 using UnityEngine;
 
 namespace EpicMergeClone.Game.Items
@@ -10,6 +11,8 @@ namespace EpicMergeClone.Game.Items
         protected override void OnMouseDown()
         {
             base.OnMouseDown();
+
+            FindObjectOfType<OrderPanel>().Show();
 
             // if order done, create order.
             // if no order open UI
@@ -27,9 +30,9 @@ namespace EpicMergeClone.Game.Items
             PlayerPrefs.SetInt(ItemData.ItemId + CharacterItemSO.CURRENT_ORDER_PREF_SUFFIX, currentOrderIndex);
         }
 
-        public OrderGroup GetCurrentOrder()
+        public Order GetCurrentOrder()
         {
-            return m_GlobalGameData.allOrderDatas.GetOrderGroup(ItemData.orders[ItemData.GetCurrentOrderIndex()].OrderId);
+            return m_GlobalGameData.allOrderDatas.GetOrder(ItemData.orders[ItemData.GetCurrentOrderIndex()].OrderId);
         }
     }
 }

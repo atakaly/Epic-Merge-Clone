@@ -1,5 +1,5 @@
 using EpicMergeClone.Game.Items;
-using EpicMergeClone.Game.Mechanics.Order;
+using EpicMergeClone.Game.Mechanics.OrderSystem;
 using UnityEngine;
 using Zenject;
 

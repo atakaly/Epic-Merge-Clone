@@ -1,4 +1,4 @@
-using EpicMergeClone.Game.Mechanics.Order;
+using EpicMergeClone.Game.Mechanics.OrderSystem;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace EpicMergeClone.Game.Items
     {
         public const string CURRENT_ORDER_PREF_SUFFIX = "_CurrentOrderIndex";
 
-        public List<OrderGroup> orders;
+        public List<Order> orders;
 
         public int GetCurrentOrderIndex()
         {
