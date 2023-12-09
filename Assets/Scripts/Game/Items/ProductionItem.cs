@@ -19,12 +19,7 @@ namespace EpicMergeClone.Game.Items
             //StartProduce();
         }
 
-        protected override void OnMouseDown()
-        {
-            OnClick();
-        }
-
-        public void OnClick()
+        protected override void OnClick()
         {
             if (IsProducing())
                 return;

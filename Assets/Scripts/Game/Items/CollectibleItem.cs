@@ -15,9 +15,9 @@ namespace EpicMergeClone.Game.Items
             m_Inventory = inventory;
         }
 
-        protected override void OnMouseDown()
+        protected override void OnClick()
         {
-            base.OnMouseDown();
+            base.OnClick();
             Collect();
         }
 

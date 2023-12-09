@@ -8,14 +8,11 @@ namespace EpicMergeClone.Game.Items
     {
         public CharacterItemSO ItemData => ItemDataSO as CharacterItemSO;
 
-        protected override void OnMouseDown()
+        protected override void OnClick()
         {
-            base.OnMouseDown();
+            base.OnClick();
 
             FindObjectOfType<OrderPanel>().Show();
-
-            // if order done, create order.
-            // if no order open UI
         }
 
         public void OrderComplete()
