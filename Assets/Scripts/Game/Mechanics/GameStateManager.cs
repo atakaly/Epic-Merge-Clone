@@ -1,7 +1,9 @@
 using EpicMergeClone.Game.Player;
+using EpicMergeClone.UI;
 using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace EpicMergeClone.Game.Mechanics
 {
@@ -108,6 +110,14 @@ namespace EpicMergeClone.Game.Mechanics
             }
         }
 
+        private UIManager m_UIManager;
+
+        [Inject]
+        public void Construct(UIManager uiManager)
+        {
+            m_UIManager = uiManager;
+        }
+
         public void Awake()
         {
             m_PlayerData = GameState.LoadPlayerData();
@@ -120,6 +130,8 @@ namespace EpicMergeClone.Game.Mechanics
             SetLastEnergyUpdateTime(DateTime.UtcNow);
             waitTime = new WaitForSeconds(ENERGY_INCREMENT_INTERVAL_SECONDS);
             StartCoroutine(IncrementEnergyCoroutine());
+
+            UpdateUI();
         }
 
         private DateTime GetLastEnergyUpdateTime()
@@ -162,6 +174,16 @@ namespace EpicMergeClone.Game.Mechanics
         {
             GameState.SavePlayerData(m_PlayerData);
             OnStateUpdate?.Invoke();
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            m_UIManager.UpperBarUIController.UpdateEnergyText(CurrentEnergy, MaxEnergy);
+            m_UIManager.UpperBarUIController.UpdateExperience(Experience);
+            m_UIManager.UpperBarUIController.UpdateLevelText(Level);
+            m_UIManager.UpperBarUIController.UpdateWorkerText(CurrentWorkers, MaxWorkers);
+            m_UIManager.UpperBarUIController.UpdateCoinText(Coin);
         }
     }
 }

@@ -27,8 +27,6 @@ namespace EpicMergeClone.Game.Items
 
         public void Clear()
         {
-            //if(m_GameStateManager.CurrentEnergy )
-
             if(m_GameStateManager.CurrentEnergy < CurrentRequiredPlayerEnergy())
             {
                 Debug.Log("You don't have sufficient energy");
