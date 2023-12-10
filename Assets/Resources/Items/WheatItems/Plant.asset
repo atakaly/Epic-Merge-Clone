@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Plant
   m_EditorClassIdentifier: 
   ItemId: wheat_plant
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 1a09be40e1407d34ca081cbc32a7ce09, type: 3}

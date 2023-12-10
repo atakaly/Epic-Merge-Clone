@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OrderId: hot_chocolate_order
   OrderName: Hot Chocolate
-  OrderSprite: {fileID: 0}
+  OrderSprite: {fileID: 21300000, guid: 194b5a7ca75d2cd4786f8260ea480b6d, type: 3}
   OrderIngredients:
   - Item: {fileID: 11400000, guid: 1ebb0cae720bc8a43b20977e2790a24a, type: 2}
     Count: 2

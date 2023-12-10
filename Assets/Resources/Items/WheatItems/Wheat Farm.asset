@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wheat Farm
   m_EditorClassIdentifier: 
   ItemId: wheat_farm
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 5e9f8b94efa5a3b4fbef8b68266093ee, type: 3}
   ProduceTimeSeconds: 10
   ProduceAmount: 4
   ItemToProduce: {fileID: 11400000, guid: 1be97e8b2aa8a064b937cbcf28fa1c8f, type: 2}

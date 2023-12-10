@@ -14,9 +14,7 @@ namespace EpicMergeClone.UI.OrderUI
         [SerializeField] private RectTransform orderItemContainer;
         [SerializeField] private RectTransform orderDetailsContainer;
 
-        private Dictionary<OrderItemUI, OrderDetailsPanel> orderItemDetailsPairs;
-
-        private List<OrderDetailsPanel> orderDetailsPanels;
+        private List<OrderUIItemsPair> orderUIItemsPairs;
 
         private BoardManager m_BoardManager;
 
@@ -29,16 +27,14 @@ namespace EpicMergeClone.UI.OrderUI
         public override void Start()
         {
             base.Start();
-
-            Initialize();
+            orderUIItemsPairs = new List<OrderUIItemsPair>();
         }
 
         public void Initialize()
         {
-            orderItemDetailsPairs = new Dictionary<OrderItemUI, OrderDetailsPanel>();
-
             var currentOrders = m_BoardManager.GetCurrentOrders();
 
+            ClearUIItems();
             PopulateUIItems(currentOrders);
         }
 
@@ -46,19 +42,62 @@ namespace EpicMergeClone.UI.OrderUI
         {
             foreach (var order in currentOrders)
             {
+                OrderUIItemsPair pair = TryGetPanels();
+                pair.Order = order;
+                pair.ItemUI.Initialize(order);
+                pair.DetailsPanel.Initialize(order, null);
+
+                orderUIItemsPairs.Add(pair);
+            }
+        }
+
+        private OrderUIItemsPair TryGetPanels()
+        {
+            OrderUIItemsPair pair = orderUIItemsPairs.Find(item => !item.IsActive);
+
+            if (pair == null)
+            {
                 var orderItemUI = Instantiate(orderItemPrefab, orderItemContainer);
-                orderItemUI.Initialize(order);
-
                 var newDetailsPanel = Instantiate(orderDetailsPanelPrefab, orderDetailsContainer);
-                newDetailsPanel.Initialize(order, null);
 
-                orderItemDetailsPairs.Add(orderItemUI, newDetailsPanel);
+                pair = new OrderUIItemsPair()
+                {
+                    ItemUI = orderItemUI,
+                    DetailsPanel = newDetailsPanel
+                };
+            }
+
+            pair.SetActive(true);
+            return pair;
+        }
+
+        private void ClearUIItems()
+        {
+            foreach (var pair in orderUIItemsPairs)
+            {
+                pair.SetActive(false);
             }
         }
 
         public void CompleteOrder()
         {
 
+        }
+
+        [System.Serializable]
+        public class OrderUIItemsPair
+        {
+            public Order Order;
+            public OrderItemUI ItemUI;
+            public OrderDetailsPanel DetailsPanel;
+            public bool IsActive;
+
+            public void SetActive(bool active)
+            {
+                IsActive = active;
+                ItemUI.gameObject.SetActive(active);
+                DetailsPanel.gameObject.SetActive(active);
+            }
         }
     }
 }

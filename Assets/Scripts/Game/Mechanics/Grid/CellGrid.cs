@@ -36,6 +36,11 @@ namespace EpicMergeClone.Game.Mechanics.Grid
         {
             GameState.GridData gridData = GameState.LoadGridData();
 
+            if (gridData == null)
+            {
+                gridData = JsonUtility.FromJson<GameState.GridData>(m_GlobalGameData.InitialGridState);
+            }
+
             for (int i = 0; i < gridData.cells.Length; i++)
             {
                 var currentCellData = gridData.cells[i];
@@ -47,7 +52,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
                     m_Cells[i].OnCellStateChanged += SaveState;
                     continue;
                 }
-                
+
                 m_Cells[i].AddItem(m_ItemPoolManager.SpawnItem(itemData), m_Cells[i].transform.position, m_Cells[i].transform.position);
                 m_Cells[i].CurrentItem.LateInitialize();
                 m_Cells[i].OnCellStateChanged += SaveState;

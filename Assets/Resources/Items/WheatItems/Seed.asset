@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Seed
   m_EditorClassIdentifier: 
   ItemId: wheat_seed
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 80a72307964a2d04f901a46e9f395066, type: 3}

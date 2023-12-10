@@ -11,6 +11,8 @@ namespace EpicMergeClone.Installers
         public AllItemDatas allItemDatas;
         public OrdersDataSO allOrderDatas;
 
+        public string InitialGridState = "";
+
         public override void InstallBindings()
         {
             Container.BindInstance(this);

@@ -1,5 +1,4 @@
 using EpicMergeClone.Game.Mechanics.OrderSystem;
-using EpicMergeClone.UI.OrderUI;
 using UnityEngine;
 
 namespace EpicMergeClone.Game.Items
@@ -8,11 +7,13 @@ namespace EpicMergeClone.Game.Items
     {
         public CharacterItemSO ItemData => ItemDataSO as CharacterItemSO;
 
+
         protected override void OnClick()
         {
             base.OnClick();
 
-            FindObjectOfType<OrderPanel>().Show();
+            m_UIManager.OrderPanel.Show();
+            m_UIManager.OrderPanel.Initialize();
         }
 
         public void OrderComplete()

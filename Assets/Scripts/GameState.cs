@@ -1,5 +1,6 @@
 using EpicMergeClone.Game.Mechanics.Grid;
 using EpicMergeClone.Game.Player;
+using EpicMergeClone.Installers;
 using EpicMergeClone.Utils;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace EpicMergeClone
     {
         public const string GRID_STATE_PREF_NAME = "grid_state";
         public const string PLAYER_STATE_PREF_NAME = "player_state";
+
 
         [System.Serializable]
         public class GridData
@@ -43,7 +45,7 @@ namespace EpicMergeClone
             string jsonString = PlayerPrefsStorage.GetString(GRID_STATE_PREF_NAME);
 
             if (string.IsNullOrEmpty(jsonString))
-                return new GridData();
+                return null;
 
             return JsonUtility.FromJson<GridData>(jsonString);
         }

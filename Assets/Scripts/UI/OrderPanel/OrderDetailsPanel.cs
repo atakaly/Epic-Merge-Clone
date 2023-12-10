@@ -14,20 +14,50 @@ namespace EpicMergeClone.UI.OrderUI
         [SerializeField] private OrderIngredientItemUI m_OrderIngredientItemPrefab;
         [SerializeField] private RectTransform m_OrderIngredientContainer;
 
+        private List<OrderIngredientItemUI> m_OrderIngredientUIItems = new List<OrderIngredientItemUI>();
+
+        private void Start()
+        {
+        }
+
         public void Initialize(Order order, CharacterItemSO characterItem)
         {
             m_CharacterImage.sprite = characterItem?.itemSprite;
             m_OrderImage.sprite = order.OrderSprite;
 
+            ClearUIItems();
             PopulateIngredients(order.OrderIngredients);
         }
 
-        public void PopulateIngredients(List<OrderIngredient> OrderIngredients)
+        public void PopulateIngredients(List<OrderIngredient> orderIngredients)
         {
-            foreach (var ingredient in OrderIngredients)
+            foreach (var ingredient in orderIngredients)
             {
-                var newIngredientItem = Instantiate(m_OrderIngredientItemPrefab, m_OrderIngredientContainer);
+                OrderIngredientItemUI newIngredientItem = TryGetIngredientItemUI();
                 newIngredientItem.Initialize(ingredient);
+                m_OrderIngredientUIItems.Add(newIngredientItem);
+            }
+        }
+
+        private OrderIngredientItemUI TryGetIngredientItemUI()
+        {
+            OrderIngredientItemUI item = m_OrderIngredientUIItems.Find(i => !i.gameObject.activeInHierarchy);
+
+            if (item == null)
+            {
+                item = Instantiate(m_OrderIngredientItemPrefab, m_OrderIngredientContainer);
+                m_OrderIngredientUIItems.Add(item);
+            }
+
+            item.gameObject.SetActive(true);
+            return item;
+        }
+
+        public void ClearUIItems()
+        {
+            foreach (var item in m_OrderIngredientUIItems)
+            {
+                item.gameObject.SetActive(false);
             }
         }
     }

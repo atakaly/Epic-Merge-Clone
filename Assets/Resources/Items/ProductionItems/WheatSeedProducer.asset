@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WheatSeedProducer
   m_EditorClassIdentifier: 
   ItemId: wheat_seed_production
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 5eefb0c42a74924468962c49e59e30b4, type: 3}
   ItemEnergy: 4
   PlayerEnergyRequiresForClear: 050000000a0000000f00000014000000
   ItemsToCreate:

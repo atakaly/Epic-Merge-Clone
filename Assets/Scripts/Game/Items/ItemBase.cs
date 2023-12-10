@@ -4,6 +4,7 @@ using EpicMergeClone.Game.Mechanics.Board;
 using EpicMergeClone.Game.Mechanics.Grid;
 using EpicMergeClone.Installers;
 using EpicMergeClone.Pool;
+using EpicMergeClone.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,15 +26,18 @@ namespace EpicMergeClone.Game.Items
         protected ItemPoolManager m_ItemPoolManager;
         protected GlobalGameData m_GlobalGameData;
         protected GameStateManager m_GameStateManager;
+        protected UIManager m_UIManager;
 
         [Inject]
         public void Construct(ItemPoolManager itemPoolManager,
             GlobalGameData globalGameData,
-            GameStateManager gameStateManager)
+            GameStateManager gameStateManager,
+            UIManager UIManager)
         {
             m_ItemPoolManager = itemPoolManager;
             m_GlobalGameData = globalGameData;
             m_GameStateManager = gameStateManager;
+            m_UIManager = UIManager;
         }
 
         private void Start()
