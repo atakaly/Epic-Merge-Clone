@@ -20,7 +20,7 @@ namespace EpicMergeClone.Game.Items
 
         private List<Cell> m_CollidingCells = new List<Cell>();
 
-        public Cell CurrentCell { get; set; }
+        [SerializeField] public Cell CurrentCell { get; set; }
 
         protected ItemPoolManager m_ItemPoolManager;
         protected GlobalGameData m_GlobalGameData;

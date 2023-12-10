@@ -41,13 +41,16 @@ namespace EpicMergeClone.Game.Mechanics.Grid
                 var currentCellData = gridData.cells[i];
                 var itemData = m_GlobalGameData.allItemDatas.GetItemData(currentCellData.itemData.itemId);
 
-                m_Cells[i].OnCellStateChanged += SaveState;
 
                 if (itemData == null)
+                {
+                    m_Cells[i].OnCellStateChanged += SaveState;
                     continue;
-
+                }
+                
                 m_Cells[i].AddItem(m_ItemPoolManager.SpawnItem(itemData), m_Cells[i].transform.position, m_Cells[i].transform.position);
                 m_Cells[i].CurrentItem.LateInitialize();
+                m_Cells[i].OnCellStateChanged += SaveState;
             }
         }
 

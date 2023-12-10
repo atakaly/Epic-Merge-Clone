@@ -75,8 +75,8 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             Cell availableCell = GetFirstAvailableNeighbour();
             ItemBase oldItem = m_CurrentItem;
 
+            CurrentItem = null;
             availableCell.AddItem(oldItem, oldItem.transform.position, availableCell.transform.position);
-            oldItem.CurrentCell = availableCell;
         }
 
         public Cell GetFirstAvailableNeighbour()
