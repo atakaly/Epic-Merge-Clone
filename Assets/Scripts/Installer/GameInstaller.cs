@@ -1,6 +1,7 @@
 using EpicMergeClone.Game.Mechanics;
 using EpicMergeClone.Game.Mechanics.Board;
-using EpicMergeClone.Game.Mechanics.Inventory;
+using EpicMergeClone.Game.Mechanics.InventorySystem;
+using EpicMergeClone.Game.Mechanics.OrderSystem;
 using EpicMergeClone.UI;
 using Zenject;
 
@@ -24,6 +25,9 @@ namespace EpicMergeClone.Installers
 
             Container.Bind<BoardManager>()
                 .FromComponentInHierarchy()
+                .AsSingle();
+
+            Container.Bind<OrderManager>()
                 .AsSingle();
 
             Container.Bind<Inventory>()

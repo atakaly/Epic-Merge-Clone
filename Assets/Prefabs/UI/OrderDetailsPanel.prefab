@@ -181,6 +181,8 @@ MonoBehaviour:
   m_OrderImage: {fileID: 2616738911576091386}
   m_OrderIngredientItemPrefab: {fileID: 6275436763954583781, guid: 173c720a4b693414cbc345fa70560708, type: 3}
   m_OrderIngredientContainer: {fileID: 5557373459701212931}
+  m_ClaimButton: {fileID: 8770966856883123389}
+  m_CookButton: {fileID: 7224723158618353413}
 --- !u!1 &3573207783226816451
 GameObject:
   m_ObjectHideFlags: 0

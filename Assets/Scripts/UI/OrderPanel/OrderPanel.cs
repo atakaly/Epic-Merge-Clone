@@ -17,11 +17,13 @@ namespace EpicMergeClone.UI.OrderUI
         private List<OrderUIItemsPair> orderUIItemsPairs;
 
         private BoardManager m_BoardManager;
+        private OrderManager m_OrderManager;
 
         [Inject]
-        public void Construct(BoardManager boardManager)
+        public void Construct(BoardManager boardManager, OrderManager orderManager)
         {
             m_BoardManager = boardManager;
+            m_OrderManager = orderManager;
         }
 
         public override void Start()
@@ -38,14 +40,14 @@ namespace EpicMergeClone.UI.OrderUI
             PopulateUIItems(currentOrders);
         }
 
-        public void PopulateUIItems(List<Order> currentOrders)
+        public void PopulateUIItems(List<BoardManager.CharacterOrderPair> currentCharOrderPairs)
         {
-            foreach (var order in currentOrders)
+            foreach (var orderPair in currentCharOrderPairs)
             {
                 OrderUIItemsPair pair = TryGetPanels();
-                pair.Order = order;
-                pair.ItemUI.Initialize(order);
-                pair.DetailsPanel.Initialize(order, null);
+                pair.Order = orderPair.Order;
+                pair.ItemUI.Initialize(orderPair.Order);
+                pair.DetailsPanel.Initialize(orderPair.Order, m_OrderManager, orderPair.characterItemSO);
 
                 orderUIItemsPairs.Add(pair);
             }

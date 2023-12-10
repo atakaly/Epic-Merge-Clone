@@ -10,17 +10,21 @@ namespace EpicMergeClone.Game.Mechanics.Board
     {
         [SerializeField] private CellGrid m_Grid;
 
-        public List<Order> GetCurrentOrders()
+        public List<CharacterOrderPair> GetCurrentOrders()
         {
-            List<Order> orders = new List<Order>();
+            List<CharacterOrderPair> characterOrderPairs = new List<CharacterOrderPair>();
             List<CharacterItem> characters = FindCharacters();
 
             for (int i = 0; i < characters.Count; i++)
             {
-                orders.Add(characters[i].GetCurrentOrder());
+                characterOrderPairs.Add( new CharacterOrderPair()
+                {
+                    characterItemSO = characters[i].ItemDataSO as CharacterItemSO,
+                    Order = characters[i].GetCurrentOrder()
+                });
             }
 
-            return orders;
+            return characterOrderPairs;
         }
 
         public List<CharacterItem> FindCharacters()
@@ -39,6 +43,13 @@ namespace EpicMergeClone.Game.Mechanics.Board
             }
 
             return characters;
+        }
+
+        [System.Serializable]
+        public struct CharacterOrderPair 
+        {
+            public CharacterItemSO characterItemSO;
+            public Order Order;
         }
     }
 }

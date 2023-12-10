@@ -1,8 +1,9 @@
 using EpicMergeClone.Game.Items;
+using EpicMergeClone.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EpicMergeClone.Game.Mechanics.Inventory
+namespace EpicMergeClone.Game.Mechanics.InventorySystem
 {
     public class Inventory
     {
@@ -36,9 +37,9 @@ namespace EpicMergeClone.Game.Mechanics.Inventory
             SaveInventoryState();
         }
 
-        public void RemoveItem(CollectibleItem item, int count = 1)
+        public void RemoveItem(CollectibleItemSO item, int count = 1)
         {
-            var itemData = inventoryData.Items.Find(data => data.itemId == item.ItemDataSO.ItemId);
+            var itemData = inventoryData.Items.Find(data => data.itemId == item.ItemId);
             if (itemData != null)
             {
                 itemData.count -= count;
@@ -57,17 +58,32 @@ namespace EpicMergeClone.Game.Mechanics.Inventory
             return inventoryData.Items.Exists(data => data.itemId == itemUniqueId);
         }
 
+        public int GetItemCount(string itemUniqueId)
+        {
+            if (!IsContainItem(itemUniqueId))
+                return 0;
+
+            for (int i = 0; i < inventoryData.Items.Count; i++)
+            {
+                if (inventoryData.Items[i].itemId == itemUniqueId)
+                {
+                    return inventoryData.Items[i].count;
+                }
+            }
+
+            return 0;
+        }
+
         public void SaveInventoryState()
         {
             string jsonString = JsonUtility.ToJson(inventoryData);
 
-            PlayerPrefs.SetString(INVENTORY_STATE_PREF_NAME, jsonString);
-            PlayerPrefs.Save();
+            PlayerPrefsStorage.SetString(INVENTORY_STATE_PREF_NAME, jsonString);
         }
 
         public InventoryData LoadInventoryState()
         {
-            string jsonString = PlayerPrefs.GetString(INVENTORY_STATE_PREF_NAME, "{}");
+            string jsonString = PlayerPrefsStorage.GetString(INVENTORY_STATE_PREF_NAME, "{}");
 
             return JsonUtility.FromJson<InventoryData>(jsonString) ?? new InventoryData();
         }

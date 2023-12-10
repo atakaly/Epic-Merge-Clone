@@ -1,4 +1,4 @@
-using EpicMergeClone.Game.Mechanics.Inventory;
+using EpicMergeClone.Game.Mechanics.InventorySystem;
 using Zenject;
 
 namespace EpicMergeClone.Game.Items
