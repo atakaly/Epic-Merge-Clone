@@ -61,7 +61,7 @@ namespace EpicMergeClone.Game.Items
                 var newItem = m_ItemPoolManager.SpawnItem(itemsToCreate[randomItemIndex]);
                 var cell = CurrentCell.GetFirstAvailableNeighbour(visitedCells);
 
-                cell.AddItem(newItem);
+                cell.AddItem(newItem, transform.position, cell.transform.position);
             }
         }
 

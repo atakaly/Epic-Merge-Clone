@@ -18,14 +18,18 @@ namespace EpicMergeClone.Game.Mechanics.Board
             for (int i = 0; i < mergingItems.Count; i++)
             {
                 var currentItem = mergingItems[i];
-                poolManager.DespawnItem(currentItem);
+                currentItem.Move(targetCell.transform.position, 0.2f, () =>
+                {
+                    poolManager.DespawnItem(currentItem);
+                });
             }
 
             var targetItemTreeSO = allItemsData.GetItemTreeOf(targetItem.ItemDataSO);
-            
-            ItemBase newItem = poolManager.SpawnItem(targetItem);
-            targetCell.AddItem(newItem);
-            newItem.InitializeItem(targetItemTreeSO.GetNextItemData(targetItemData));
+            var nextItemData = targetItemTreeSO.GetNextItemData(targetItemData);
+            var newItem = poolManager.SpawnItem(nextItemData);
+
+            targetCell.AddItem(newItem, targetCell.transform.position, targetCell.transform.position);
+            newItem.InitializeItem(nextItemData);
         }
 
         public static List<ItemBase> TryGetMergeItems(ItemBase currentItem, ItemBase targetItem)
@@ -47,7 +51,6 @@ namespace EpicMergeClone.Game.Mechanics.Board
             for (int i = 0; i < mergingCells.Count; i++)
             {
                 var cell = mergingCells[i];
-                cell.CurrentItem.Move(targetItem.transform.position, 0.2f);
                 
                 if(!mergingItems.Contains(cell.CurrentItem))
                     mergingItems.Add(cell.CurrentItem);

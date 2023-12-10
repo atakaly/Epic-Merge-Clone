@@ -72,7 +72,7 @@ namespace EpicMergeClone.Game.Items
         {
             if (m_CollidingCells.Count == 0)
             {
-                CurrentCell.AddItem(this);
+                CurrentCell.AddItem(this, transform.position, CurrentCell.transform.position);
                 return;
             }
 
@@ -80,7 +80,7 @@ namespace EpicMergeClone.Game.Items
 
             if (targetCell.State == CellState.Unavailable || targetCell.State == CellState.Locked)
             {
-                CurrentCell.AddItem(this);
+                CurrentCell.AddItem(this, transform.position, CurrentCell.transform.position);
                 return;
             }
 
@@ -98,7 +98,7 @@ namespace EpicMergeClone.Game.Items
                 }
 
                 CurrentCell.RemoveItem();
-                targetCell.AddItem(this);
+                targetCell.AddItem(this, transform.position, targetCell.transform.position);
                 CurrentCell = targetCell;
             }
         }

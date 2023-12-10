@@ -45,7 +45,7 @@ namespace EpicMergeClone.Game.Items
                 var newCollectible = m_ItemPoolManager.SpawnItem(ItemData.ItemToProduce);
                 var cell = CurrentCell.GetFirstAvailableNeighbour(visitedCells);
 
-                cell.AddItem(newCollectible);
+                cell.AddItem(newCollectible, transform.position, cell.transform.position);
             }
         }
 
@@ -61,8 +61,6 @@ namespace EpicMergeClone.Game.Items
 
         public int LeftTimeToProduce()
         {
-            //long startTime = long.Parse(PlayerPrefs.GetString());
-
             return (int)DateTime.Now.Ticks - (PlayerPrefs.GetInt(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId) + ItemData.ProduceTimeSeconds);
         }
 

@@ -51,10 +51,11 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             m_CellState = m_CurrentItem != null ? CellState.Occupied : CellState.Available;
         }
 
-        public void AddItem(ItemBase item)
+        public void AddItem(ItemBase item, Vector3 startPosition, Vector3 endPosition)
         {
             m_CurrentItem = item;
-            m_CurrentItem.Move(transform.position, 0.3f);
+            m_CurrentItem.transform.position = startPosition;
+            m_CurrentItem.Move(endPosition, 0.3f);
             m_CurrentItem.CurrentCell = this;
             m_CellState = CellState.Occupied;
 
@@ -75,7 +76,7 @@ namespace EpicMergeClone.Game.Mechanics.Grid
             Cell availableCell = GetFirstAvailableNeighbour(visitedCells);
             ItemBase oldItem = m_CurrentItem;
 
-            m_CurrentItem.Move(availableCell.transform.position, 0.3f, () => availableCell.AddItem(oldItem));
+            availableCell.AddItem(oldItem, m_CurrentItem.transform.position, availableCell.transform.position);
         }
 
         public Cell GetFirstAvailableNeighbour(List<Cell> visitedCells)
