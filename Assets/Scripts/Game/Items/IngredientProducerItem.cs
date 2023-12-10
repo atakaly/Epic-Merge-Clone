@@ -38,12 +38,10 @@ namespace EpicMergeClone.Game.Items
 
         private void ProduceCollectibles()
         {
-            List<Cell> visitedCells = new List<Cell>();
-
             for (int i = 0; i < ItemData.ProduceAmount; i++)
             {
                 var newCollectible = m_ItemPoolManager.SpawnItem(ItemData.ItemToProduce);
-                var cell = CurrentCell.GetFirstAvailableNeighbour(visitedCells);
+                var cell = CurrentCell.GetFirstAvailableNeighbour();
 
                 cell.AddItem(newCollectible, transform.position, cell.transform.position);
             }

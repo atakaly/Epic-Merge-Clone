@@ -41,7 +41,13 @@ namespace EpicMergeClone.Game.Items
             m_ItemInputHandler = GetComponent<ItemInputHandler>();
 
             m_ItemInputHandler.OnClick += OnClick;
-            m_ItemInputHandler.OnDragged += OnDragged;
+            m_ItemInputHandler.OnEndDrag += OnDragEnd;
+            m_ItemInputHandler.OnStartDrag += OnDragStarted;
+        }
+
+        private void OnEnable()
+        {
+            m_CollidingCells.Clear();
         }
 
         public virtual void InitializeItem(ItemDataSO itemData)
@@ -68,7 +74,12 @@ namespace EpicMergeClone.Game.Items
 
         }
 
-        private void OnDragged()
+        private void OnDragStarted()
+        {
+            CurrentCell.RemoveItem();
+        }
+
+        private void OnDragEnd()
         {
             if (m_CollidingCells.Count == 0)
             {
@@ -84,9 +95,9 @@ namespace EpicMergeClone.Game.Items
                 return;
             }
 
-            var mergingItems = MergeManager.TryGetMergeItems(this, targetCell.CurrentItem);
+            var mergingItems = MergeManager.GetMergeItems(this, targetCell.CurrentItem);
 
-            if (mergingItems != null)
+            if (mergingItems != null && mergingItems.Count != 0)
             {
                 MergeManager.Merge(mergingItems, m_ItemPoolManager, m_GlobalGameData.allItemDatas);
             }
@@ -97,9 +108,7 @@ namespace EpicMergeClone.Game.Items
                     targetCell.ShiftItem();
                 }
 
-                CurrentCell.RemoveItem();
                 targetCell.AddItem(this, transform.position, targetCell.transform.position);
-                CurrentCell = targetCell;
             }
         }
 
@@ -119,11 +128,9 @@ namespace EpicMergeClone.Game.Items
             }
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
-            /*
-            m_ItemInputHandler.OnClick -= OnClick;
-            m_ItemInputHandler.OnDragged -= OnDragged;*/
+            CurrentCell = null;
         }
     }
 }

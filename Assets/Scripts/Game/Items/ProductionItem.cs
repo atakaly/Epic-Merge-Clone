@@ -53,13 +53,11 @@ namespace EpicMergeClone.Game.Items
             var itemsToCreate = ItemData.ItemsToCreate;
             int randomNumberOfItems = Random.Range(4, 6);
 
-            List<Cell> visitedCells = new List<Cell>();
-
             for (int i = 0; i < randomNumberOfItems; i++)
             {
                 int randomItemIndex = Random.Range(0, itemsToCreate.Length);
                 var newItem = m_ItemPoolManager.SpawnItem(itemsToCreate[randomItemIndex]);
-                var cell = CurrentCell.GetFirstAvailableNeighbour(visitedCells);
+                var cell = CurrentCell.GetFirstAvailableNeighbour();
 
                 cell.AddItem(newItem, transform.position, cell.transform.position);
             }

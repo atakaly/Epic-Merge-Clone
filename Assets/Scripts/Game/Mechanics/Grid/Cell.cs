@@ -72,31 +72,36 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 
         public void ShiftItem()
         {
-            List<Cell> visitedCells = new List<Cell>();
-            Cell availableCell = GetFirstAvailableNeighbour(visitedCells);
+            Cell availableCell = GetFirstAvailableNeighbour();
             ItemBase oldItem = m_CurrentItem;
 
-            availableCell.AddItem(oldItem, m_CurrentItem.transform.position, availableCell.transform.position);
+            availableCell.AddItem(oldItem, oldItem.transform.position, availableCell.transform.position);
+            oldItem.CurrentCell = availableCell;
         }
 
-        public Cell GetFirstAvailableNeighbour(List<Cell> visitedCells)
+        public Cell GetFirstAvailableNeighbour()
         {
-            for (int i = 0; i < NeighbourCells.Count; i++)
-            {
-                Cell neighbor = NeighbourCells[i];
-                if (neighbor.State == CellState.Available && !visitedCells.Contains(neighbor))
-                    return neighbor;
-            }
+            Queue<Cell> queue = new Queue<Cell>();
+            HashSet<Cell> visitedCells = new HashSet<Cell>();
 
-            for (int i = 0; i < NeighbourCells.Count; i++)
+            queue.Enqueue(this);
+            visitedCells.Add(this);
+
+            while (queue.Count > 0)
             {
-                Cell neighbor = NeighbourCells[i];
-                if (neighbor.State == CellState.Occupied && !visitedCells.Contains(neighbor))
+                Cell currentCell = queue.Dequeue();
+
+                foreach (Cell neighbor in currentCell.NeighbourCells)
                 {
-                    visitedCells.Add(neighbor);
-                    Cell availableNeighbor = neighbor.GetFirstAvailableNeighbour(visitedCells);
-                    if (availableNeighbor != null)
-                        return availableNeighbor;
+                    if (!visitedCells.Contains(neighbor))
+                    {
+                        visitedCells.Add(neighbor);
+
+                        if (neighbor.State == CellState.Available)
+                            return neighbor;
+
+                        queue.Enqueue(neighbor);
+                    }
                 }
             }
 

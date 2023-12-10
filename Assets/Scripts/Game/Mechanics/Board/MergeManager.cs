@@ -32,7 +32,7 @@ namespace EpicMergeClone.Game.Mechanics.Board
             newItem.InitializeItem(nextItemData);
         }
 
-        public static List<ItemBase> TryGetMergeItems(ItemBase currentItem, ItemBase targetItem)
+        public static List<ItemBase> GetMergeItems(ItemBase currentItem, ItemBase targetItem)
         {
             if (targetItem == null)
                 return null;
@@ -40,13 +40,14 @@ namespace EpicMergeClone.Game.Mechanics.Board
             List<Cell> visitedCells = new List<Cell>();
             List<Cell> mergingCells = FindMergingCells(currentItem, targetItem, visitedCells);
 
-            if (mergingCells.Count < 2)
+            if (mergingCells.Count < 1)
                 return null;
-            
-            List<ItemBase> mergingItems = new List<ItemBase>();
 
-            mergingItems.Add(targetItem);
-            mergingItems.Add(currentItem);
+            List<ItemBase> mergingItems = new List<ItemBase>
+            {
+                targetItem,
+                currentItem
+            };
 
             for (int i = 0; i < mergingCells.Count; i++)
             {
@@ -75,7 +76,8 @@ namespace EpicMergeClone.Game.Mechanics.Board
                     continue;
 
                 if (neighbourCell.CurrentItem != null &&
-                    neighbourCell.CurrentItem.ItemDataSO.IsSameType(currentItem.ItemDataSO))
+                    neighbourCell.CurrentItem.ItemDataSO.IsSameType(currentItem.ItemDataSO) &&
+                    targetItem.ItemDataSO.IsSameType(currentItem.ItemDataSO))
                 {
                     mergingCells.Add(neighbourCell);
                     mergingCells.AddRange(FindMergingCells(currentItem, neighbourCell.CurrentItem, visitedCells));
