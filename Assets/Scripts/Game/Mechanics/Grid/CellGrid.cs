@@ -123,10 +123,17 @@ namespace EpicMergeClone.Game.Mechanics.Grid
 
         private bool IsNeighbor(int x1, int y1, int x2, int y2)
         {
-            int deltaX = Mathf.Abs(x1 - x2);
-            int deltaY = Mathf.Abs(y1 - y2);
+            int deltaX = x1 - x2;
+            int deltaY = y1 - y2;
 
-            return (deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1);
+            return (deltaX == -1 && deltaY == -1) ||
+                   (deltaX == -1 && deltaY == 0) ||
+                   (deltaX == -1 && deltaY == 1) ||
+                   (deltaX == 0 && deltaY == -2) ||
+                   (deltaX == 0 && deltaY == 2) ||
+                   (deltaX == 0 && deltaY == 1) ||
+                   (deltaX == 0 && deltaY == -1) ||
+                   (deltaX == 1 && deltaY == 0);
         }
 
         public void SaveCurrentGridState()

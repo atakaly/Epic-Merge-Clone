@@ -2,6 +2,8 @@ using EpicMergeClone.Game.Items;
 using EpicMergeClone.Game.Mechanics.Grid;
 using EpicMergeClone.Pool;
 using System.Collections.Generic;
+using UnityEngine;
+using static EpicMergeClone.GameState;
 
 namespace EpicMergeClone.Game.Mechanics.Board
 {
@@ -26,10 +28,26 @@ namespace EpicMergeClone.Game.Mechanics.Board
 
             var targetItemTreeSO = allItemsData.GetItemTreeOf(targetItem.ItemDataSO);
             var nextItemData = targetItemTreeSO.GetNextItemData(targetItemData);
-            var newItem = poolManager.SpawnItem(nextItemData);
 
-            targetCell.AddItem(newItem, targetCell.transform.position, targetCell.transform.position);
-            newItem.InitializeItem(nextItemData);
+            int totalItemCount = mergingItems.Count;
+            int nextItemCount = totalItemCount / 3;
+            int sameItemCount = totalItemCount % 3;
+
+            for (int i = 0; i < nextItemCount; i++)
+            {
+                var nextItem = poolManager.SpawnItem(nextItemData);
+                nextItem.InitializeItem(nextItemData);
+                var cellToSpawn = targetCell.GetFirstAvailableNeighbour();
+                cellToSpawn.AddItem(nextItem, targetCell.transform.position, cellToSpawn.transform.position);
+            }
+
+            for (int i = 0; i < sameItemCount; i++)
+            {
+                var normalItem = poolManager.SpawnItem(targetItemData);
+                normalItem.InitializeItem(targetItemData);
+                var cellToSpawn = targetCell.GetFirstAvailableNeighbour();
+                cellToSpawn.AddItem(normalItem, targetCell.transform.position, cellToSpawn.transform.position);
+            }
         }
 
         public static List<ItemBase> GetMergeItems(ItemBase currentItem, ItemBase targetItem)
