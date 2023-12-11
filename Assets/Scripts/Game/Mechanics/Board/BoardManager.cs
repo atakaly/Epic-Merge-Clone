@@ -1,6 +1,5 @@
 using EpicMergeClone.Game.Items;
 using EpicMergeClone.Game.Mechanics.Grid;
-using EpicMergeClone.Game.Mechanics.OrderSystem;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,24 +9,7 @@ namespace EpicMergeClone.Game.Mechanics.Board
     {
         [SerializeField] private CellGrid m_Grid;
 
-        public List<CharacterOrderPair> GetCurrentOrders()
-        {
-            List<CharacterOrderPair> characterOrderPairs = new List<CharacterOrderPair>();
-            List<CharacterItem> characters = FindCharacters();
-
-            for (int i = 0; i < characters.Count; i++)
-            {
-                characterOrderPairs.Add( new CharacterOrderPair()
-                {
-                    characterItemSO = characters[i].ItemDataSO as CharacterItemSO,
-                    Order = characters[i].GetCurrentOrder()
-                });
-            }
-
-            return characterOrderPairs;
-        }
-
-        public List<CharacterItem> FindCharacters()
+        public List<CharacterItem> FindCharacterItems()
         {
             List<CharacterItem> characters = new List<CharacterItem> ();
 
@@ -45,11 +27,5 @@ namespace EpicMergeClone.Game.Mechanics.Board
             return characters;
         }
 
-        [System.Serializable]
-        public struct CharacterOrderPair 
-        {
-            public CharacterItemSO characterItemSO;
-            public Order Order;
-        }
     }
 }

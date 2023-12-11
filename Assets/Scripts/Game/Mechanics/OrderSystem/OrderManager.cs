@@ -1,18 +1,44 @@
 using EpicMergeClone.Game.Items;
+using EpicMergeClone.Game.Mechanics.Board;
 using EpicMergeClone.Game.Mechanics.InventorySystem;
+using EpicMergeClone.UI;
 using EpicMergeClone.Utils;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EpicMergeClone.Game.Mechanics.OrderSystem
 {
-    public class OrderManager
+    public class OrderManager 
     {
-        public Inventory m_Inventory;
+        private BoardManager m_BoardManager;
+        private UIManager m_UIManager;
+        private Inventory m_Inventory;
 
-        public OrderManager(Inventory inventory)
+        public List<CharacterOrderPair> m_CurrentOrderCharacterPairs;
+
+        public OrderManager(BoardManager boardManager, UIManager uiManager, Inventory inventory)
         {
             m_Inventory = inventory;
+            m_UIManager = uiManager;
+            m_BoardManager = boardManager;
+        }
+
+        public List<CharacterOrderPair> GetCurrentOrderCharacterPairs()
+        {
+            List<CharacterOrderPair> characterOrderPairs = new List<CharacterOrderPair>();
+            List<CharacterItem> characters = m_BoardManager.FindCharacterItems();
+
+            for (int i = 0; i < characters.Count; i++)
+            {
+                characterOrderPairs.Add(new CharacterOrderPair()
+                {
+                    characterItemSO = characters[i].ItemDataSO as CharacterItemSO,
+                    Order = characters[i].GetCurrentOrder()
+                });
+            }
+
+            return characterOrderPairs;
         }
 
         public void CookOrder(Order order)
@@ -59,6 +85,14 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
             }
 
             return true;
+        }
+
+
+        [System.Serializable]
+        public struct CharacterOrderPair
+        {
+            public CharacterItemSO characterItemSO;
+            public Order Order;
         }
     }
 }

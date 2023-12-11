@@ -23,16 +23,13 @@ namespace EpicMergeClone.UI.OrderUI
 
         private List<OrderIngredientItemUI> m_OrderIngredientUIItems = new List<OrderIngredientItemUI>();
 
-        public void Initialize(Order order, OrderManager orderManager, CharacterItemSO characterItem)
+        public void Initialize(Order order, CharacterItemSO characterItem)
         {
             m_CharacterImage.sprite = characterItem?.itemSprite;
             m_OrderImage.sprite = order.OrderSprite;
 
             ClearUIItems();
             PopulateIngredients(order.OrderIngredients);
-
-            m_ClaimButton.gameObject.SetActive(orderManager.IsOrderCooked(order));
-            m_CookButton.gameObject.SetActive(!orderManager.IsOrderCooked(order));
 
             m_ClaimButton.onClick.AddListener(() => ClaimClick());
             m_CookButton.onClick.AddListener(() => CookClick());
@@ -78,6 +75,12 @@ namespace EpicMergeClone.UI.OrderUI
         public void CookClick()
         {
             OnCookClicked?.Invoke();
+        }
+
+        public void SetButtonsVisibility(bool isOrderCooked)
+        {
+            m_CookButton.gameObject.SetActive(!isOrderCooked);
+            m_ClaimButton.gameObject.SetActive(isOrderCooked);
         }
     }
 }

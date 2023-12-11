@@ -13,26 +13,11 @@ namespace EpicMergeClone.Installers
         {
             PoolInstaller.Install(Container);
 
-            Container.Bind<UIManager>()
-                .FromComponentInHierarchy()
-                .AsSingle();
-
-            Container.Bind<GameStateManager>()
-                .FromComponentInHierarchy()
-                .AsSingle();
-
-            Container.QueueForInject(typeof(GameStateManager));
-
-            Container.Bind<BoardManager>()
-                .FromComponentInHierarchy()
-                .AsSingle();
-
-            Container.Bind<OrderManager>()
-                .AsSingle();
-
-            Container.Bind<Inventory>()
-                .AsSingle();
-
+            Container.BindInterfacesAndSelfTo<UIManager>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameStateManager>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<BoardManager>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<OrderManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Inventory>().AsSingle();
         }
     }
 }

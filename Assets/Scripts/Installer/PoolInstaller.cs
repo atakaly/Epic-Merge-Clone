@@ -32,8 +32,7 @@ namespace EpicMergeClone.Installers
                 .WithInitialSize(2)
                 .FromComponentInNewPrefabResource("Prefabs/ProductionItem");
 
-            Container.Bind<ItemPoolManager>()
-                .AsSingle();
+            Container.Bind<ItemPoolManager>().AsSingle();
 
             Container.QueueForInject(typeof(ItemPoolManager));
         }

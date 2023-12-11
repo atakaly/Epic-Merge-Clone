@@ -7,13 +7,12 @@ namespace EpicMergeClone.Game.Items
     {
         public CharacterItemSO ItemData => ItemDataSO as CharacterItemSO;
 
-
         protected override void OnClick()
         {
             base.OnClick();
 
             m_UIManager.OrderPanel.Show();
-            m_UIManager.OrderPanel.Initialize();
+            m_UIManager.OrderPanel.Initialize(m_OrderManager.GetCurrentOrderCharacterPairs());
         }
 
         public void OrderComplete()

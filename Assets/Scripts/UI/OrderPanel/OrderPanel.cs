@@ -1,8 +1,6 @@
-using EpicMergeClone.Game.Mechanics.Board;
 using EpicMergeClone.Game.Mechanics.OrderSystem;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace EpicMergeClone.UI.OrderUI
 {
@@ -16,38 +14,22 @@ namespace EpicMergeClone.UI.OrderUI
 
         private List<OrderUIItemsPair> orderUIItemsPairs;
 
-        private BoardManager m_BoardManager;
-        private OrderManager m_OrderManager;
-
-        [Inject]
-        public void Construct(BoardManager boardManager, OrderManager orderManager)
+        public void Initialize(List<OrderManager.CharacterOrderPair> characterOrderPairs)
         {
-            m_BoardManager = boardManager;
-            m_OrderManager = orderManager;
-        }
-
-        public override void Start()
-        {
-            base.Start();
             orderUIItemsPairs = new List<OrderUIItemsPair>();
-        }
-
-        public void Initialize()
-        {
-            var currentOrders = m_BoardManager.GetCurrentOrders();
 
             ClearUIItems();
-            PopulateUIItems(currentOrders);
+            PopulateUIItems(characterOrderPairs);
         }
 
-        public void PopulateUIItems(List<BoardManager.CharacterOrderPair> currentCharOrderPairs)
+        public void PopulateUIItems(List<OrderManager.CharacterOrderPair> currentCharOrderPairs)
         {
             foreach (var orderPair in currentCharOrderPairs)
             {
                 OrderUIItemsPair pair = TryGetPanels();
                 pair.Order = orderPair.Order;
                 pair.ItemUI.Initialize(orderPair.Order);
-                pair.DetailsPanel.Initialize(orderPair.Order, m_OrderManager, orderPair.characterItemSO);
+                pair.DetailsPanel.Initialize(orderPair.Order, orderPair.characterItemSO);
 
                 orderUIItemsPairs.Add(pair);
             }

@@ -2,6 +2,7 @@ using DG.Tweening;
 using EpicMergeClone.Game.Mechanics;
 using EpicMergeClone.Game.Mechanics.Board;
 using EpicMergeClone.Game.Mechanics.Grid;
+using EpicMergeClone.Game.Mechanics.OrderSystem;
 using EpicMergeClone.Installers;
 using EpicMergeClone.Pool;
 using EpicMergeClone.UI;
@@ -26,17 +27,20 @@ namespace EpicMergeClone.Game.Items
         protected ItemPoolManager m_ItemPoolManager;
         protected GlobalGameData m_GlobalGameData;
         protected GameStateManager m_GameStateManager;
+        protected OrderManager m_OrderManager;
         protected UIManager m_UIManager;
 
         [Inject]
         public void Construct(ItemPoolManager itemPoolManager,
             GlobalGameData globalGameData,
             GameStateManager gameStateManager,
+            OrderManager orderManager,
             UIManager UIManager)
         {
             m_ItemPoolManager = itemPoolManager;
             m_GlobalGameData = globalGameData;
             m_GameStateManager = gameStateManager;
+            m_OrderManager = orderManager;
             m_UIManager = UIManager;
         }
 
