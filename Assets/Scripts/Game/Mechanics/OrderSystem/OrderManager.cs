@@ -36,7 +36,7 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
 
                 detailsPanel.SetCookButtonInteractable(IsOrderCookable(orderCharacterPairs.Order));
                 detailsPanel.SetClaimButtonInteractable(IsOrderCooking(orderCharacterPairs.Order));
-                detailsPanel.SetButtonsVisibility(IsOrderCooked(orderCharacterPairs.Order));
+                detailsPanel.SetButtonsVisibility(IsOrderCooked(orderCharacterPairs.Order), IsOrderCooking(orderCharacterPairs.Order));
             }
         }
 

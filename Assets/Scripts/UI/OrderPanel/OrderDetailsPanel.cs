@@ -89,9 +89,9 @@ namespace EpicMergeClone.UI.OrderUI
             m_ClaimButton.interactable = !isOrderCooking;
         }
 
-        public void SetButtonsVisibility(bool isOrderCooked)
+        public void SetButtonsVisibility(bool isOrderCooked, bool isOrderCooking)
         {
-            m_CookButton.gameObject.SetActive(!isOrderCooked);
+            m_CookButton.gameObject.SetActive(!isOrderCooked && !isOrderCooking);
             m_ClaimButton.gameObject.SetActive(isOrderCooked);
         }
     }
