@@ -1,6 +1,5 @@
-using EpicMergeClone.Game.Mechanics.Grid;
+using EpicMergeClone.Utils;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EpicMergeClone.Game.Items
@@ -11,19 +10,11 @@ namespace EpicMergeClone.Game.Items
 
         public IngredientProducerItemSO ItemData => ItemDataSO as IngredientProducerItemSO;
 
-        private bool m_IsCollected;
-
-        private void Start()
-        {
-            //StartProduce();
-        }
-
         protected override void OnClick()
         {
-            if (IsProducing())
-                return;
+            base.OnClick();
 
-            if (m_IsCollected)
+            if (!IsProducedItems())
                 return;
 
             Collect();
@@ -32,7 +23,6 @@ namespace EpicMergeClone.Game.Items
         private void Collect()
         {
             ProduceCollectibles();
-            m_IsCollected = true;
             StartProduce();
         }
 
@@ -47,24 +37,25 @@ namespace EpicMergeClone.Game.Items
             }
         }
 
-        public void StartProduce()
+        private TimeSpan GetLeftTime()
         {
-            if (IsProducing())
+            return TimeSpan.FromTicks(DateTime.UtcNow.Ticks - PlayerPrefsStorage.GetDateTime(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell, DateTime.MinValue).Ticks);
+        }
+
+        private void StartProduce()
+        {
+            if (!PlayerPrefs.HasKey(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell))
+            {
+                PlayerPrefsStorage.SetDateTime(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell, DateTime.MinValue);
                 return;
+            }
 
-            long currenTimeInTicks = DateTime.Now.Ticks;
-            PlayerPrefs.SetString(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId, currenTimeInTicks.ToString());
-            m_IsCollected = false;
+            PlayerPrefsStorage.SetDateTime(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell, DateTime.UtcNow);
         }
 
-        public int LeftTimeToProduce()
+        private bool IsProducedItems()
         {
-            return (int)DateTime.Now.Ticks - (PlayerPrefs.GetInt(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId) + ItemData.ProduceTimeSeconds);
-        }
-
-        public bool IsProducing()
-        {
-            return PlayerPrefs.GetInt(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId) + ItemData.ProduceTimeSeconds > DateTime.Now.Ticks;
+            return PlayerPrefsStorage.GetDateTime(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell, DateTime.MinValue).Ticks + TimeSpan.FromSeconds(ItemData.ProduceTimeSeconds).Ticks <= DateTime.UtcNow.Ticks;
         }
     }
 }

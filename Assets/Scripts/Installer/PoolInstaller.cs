@@ -8,9 +8,9 @@ namespace EpicMergeClone.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindMemoryPool<ItemBase, GenericItemPool<ItemBase>>()
+            Container.BindMemoryPool<MergeItem, GenericItemPool<MergeItem>>()
                 .WithInitialSize(15)
-                .FromComponentInNewPrefabResource("Prefabs/ItemBase");
+                .FromComponentInNewPrefabResource("Prefabs/MergeItem");
 
             Container.BindMemoryPool<CollectibleItem, GenericItemPool<CollectibleItem>>()
                 .WithInitialSize(5)

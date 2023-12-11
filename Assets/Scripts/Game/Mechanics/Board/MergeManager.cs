@@ -2,8 +2,6 @@ using EpicMergeClone.Game.Items;
 using EpicMergeClone.Game.Mechanics.Grid;
 using EpicMergeClone.Pool;
 using System.Collections.Generic;
-using UnityEngine;
-using static EpicMergeClone.GameState;
 
 namespace EpicMergeClone.Game.Mechanics.Board
 {
@@ -95,6 +93,7 @@ namespace EpicMergeClone.Game.Mechanics.Board
 
                 if (neighbourCell.CurrentItem != null &&
                     neighbourCell.CurrentItem.ItemDataSO.IsSameType(currentItem.ItemDataSO) &&
+                    neighbourCell.CurrentItem is MergeItem && currentItem is MergeItem &&
                     targetItem.ItemDataSO.IsSameType(currentItem.ItemDataSO))
                 {
                     mergingCells.Add(neighbourCell);
