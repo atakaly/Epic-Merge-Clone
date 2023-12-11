@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ItemSpriteAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 8bc89c552d65f56418e1da665777071b, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 1a09be40e1407d34ca081cbc32a7ce09, type: 3}
+  - {fileID: 21300000, guid: 979b9fc1cb322054c8490682e1d2abfd, type: 3}
+  - {fileID: 21300000, guid: 7e5e45525b6276f478258c16100b3bff, type: 3}
+  - {fileID: 21300000, guid: 9ca49e52e4ae5c543b6edb436463b922, type: 3}
+  - {fileID: 21300000, guid: 1da8cb935adac994ebb856da9aa12103, type: 3}
+  - {fileID: 21300000, guid: b73c8c74128528b45a57de5daa39223c, type: 3}
+  - {fileID: 21300000, guid: 5e9f8b94efa5a3b4fbef8b68266093ee, type: 3}
+  - {fileID: 21300000, guid: 5eefb0c42a74924468962c49e59e30b4, type: 3}
+  - {fileID: 21300000, guid: d7bdff450f183bc44acdc556ff9ad1c5, type: 3}
+  - {fileID: 21300000, guid: b1f512861d38821498980d4675597d8a, type: 3}
+  - {fileID: 21300000, guid: 80a72307964a2d04f901a46e9f395066, type: 3}
+  - {fileID: 21300000, guid: 8333e3a89540cb84cabd322edb04c88a, type: 3}
+  - {fileID: 21300000, guid: 8e5f1469345c3724ab0417eb464000bc, type: 3}
+  - {fileID: 21300000, guid: 232196ebd33d681489535461854864c9, type: 3}
+  - {fileID: 21300000, guid: 194b5a7ca75d2cd4786f8260ea480b6d, type: 3}
+  - {fileID: 21300000, guid: f1d0f9deda63c124fb4432fc7eade3f1, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - wheat_plant1
+  - croissant
+  - chocolate_tree
+  - wizard
+  - cacao_bean_2
+  - bread
+  - wheat_farm
+  - wheat_sack_production
+  - cacoa_plant
+  - wheat_plant2
+  - wheat_seed
+  - cacoa_tree
+  - cacao_bean_1
+  - collectible_chocolate
+  - hot-chocolate
+  - collectible_wheat
+  m_RenderDataMap: {}
+  m_Tag: ItemSpriteAtlas
+  m_IsVariant: 0
