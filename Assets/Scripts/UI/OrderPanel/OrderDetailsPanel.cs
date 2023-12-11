@@ -3,14 +3,15 @@ using EpicMergeClone.Game.Mechanics.OrderSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace EpicMergeClone.UI.OrderUI
 {
     public class OrderDetailsPanel : MonoBehaviour
     {
-        public event Action<Order> OnClaimClicked;
-        public event Action<Order> OnCookClicked;
+        public UnityEvent<Order> OnClaimClicked;
+        public UnityEvent<Order> OnCookClicked;
 
         [SerializeField] private Image m_CharacterImage;
         [SerializeField] private Image m_OrderImage;
@@ -76,6 +77,11 @@ namespace EpicMergeClone.UI.OrderUI
         public void CookClick()
         {
             OnCookClicked?.Invoke(m_Order);
+        }
+
+        public void SetCookButtonClickable(bool isOrderCookable)
+        {
+            m_CookButton.interactable = isOrderCookable;
         }
 
         public void SetButtonsVisibility(bool isOrderCooked)

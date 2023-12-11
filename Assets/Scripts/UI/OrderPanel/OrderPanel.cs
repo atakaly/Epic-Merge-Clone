@@ -56,6 +56,8 @@ namespace EpicMergeClone.UI.OrderUI
         {
             foreach (var pair in orderUIItemsPairs)
             {
+                pair.DetailsPanel.OnClaimClicked.RemoveAllListeners();
+                pair.DetailsPanel.OnCookClicked.RemoveAllListeners();
                 pair.SetActive(false);
             }
         }

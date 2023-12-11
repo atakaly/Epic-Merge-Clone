@@ -25,14 +25,11 @@ namespace EpicMergeClone.Game.Items
         private void ProduceOrderItems()
         {
             var currentOrder = GetCurrentOrder();
-            
-            for (int i = 0; i < ItemData.orders.Count; i++)
-            {
-                var newCollectible = m_ItemPoolManager.SpawnItem(currentOrder.OrderItemSO);
-                var cell = CurrentCell.GetFirstAvailableNeighbour();
 
-                cell.AddItem(newCollectible, transform.position, cell.transform.position);
-            }
+            var newCollectible = m_ItemPoolManager.SpawnItem(currentOrder.OrderItemSO);
+            var cell = CurrentCell.GetFirstAvailableNeighbour();
+
+            cell.AddItem(newCollectible, transform.position, cell.transform.position);
         }
 
         public Order GetCurrentOrder()

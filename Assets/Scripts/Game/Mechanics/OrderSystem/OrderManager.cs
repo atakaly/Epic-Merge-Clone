@@ -17,8 +17,6 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
 
         public List<CharacterOrderPair> m_CurrentOrderCharacterPairs;
 
-        private bool isInitialized = false;
-
         public OrderManager(BoardManager boardManager, UIManager uiManager, Inventory inventory)
         {
             m_Inventory = inventory;
@@ -28,21 +26,17 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
 
         public void Initialize()
         {
-            if (isInitialized)
-                return;
-
             m_CurrentOrderCharacterPairs = GetCurrentOrderCharacterPairs();
 
             foreach (var orderCharacterPairs in m_CurrentOrderCharacterPairs)
             {
                 var detailsPanel = m_UIManager.OrderPanel.GetOrderDetailsPanel(orderCharacterPairs.Order);
-                detailsPanel.OnCookClicked += CookOrder;
-                detailsPanel.OnClaimClicked += ClaimOrder;
+                detailsPanel.OnCookClicked.AddListener((order) => CookOrder(order));
+                detailsPanel.OnClaimClicked.AddListener((order) => ClaimOrder(order));
 
+                detailsPanel.SetCookButtonClickable(IsOrderCookable(orderCharacterPairs.Order));
                 detailsPanel.SetButtonsVisibility(IsOrderCooked(orderCharacterPairs.Order));
             }
-
-            isInitialized = true;
         }
 
         public List<CharacterOrderPair> GetCurrentOrderCharacterPairs()
@@ -90,6 +84,7 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
 
             m_CurrentOrderCharacterPairs = GetCurrentOrderCharacterPairs();
             m_UIManager.OrderPanel.Initialize(m_CurrentOrderCharacterPairs);
+            m_UIManager.OrderPanel.Hide();
         }
 
         private bool IsOrderCooked(Order order)
