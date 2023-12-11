@@ -34,7 +34,8 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
                 detailsPanel.OnCookClicked.AddListener((order) => CookOrder(order));
                 detailsPanel.OnClaimClicked.AddListener((order) => ClaimOrder(order));
 
-                detailsPanel.SetCookButtonClickable(IsOrderCookable(orderCharacterPairs.Order));
+                detailsPanel.SetCookButtonInteractable(IsOrderCookable(orderCharacterPairs.Order));
+                detailsPanel.SetClaimButtonInteractable(IsOrderCooking(orderCharacterPairs.Order));
                 detailsPanel.SetButtonsVisibility(IsOrderCooked(orderCharacterPairs.Order));
             }
         }
@@ -67,6 +68,8 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
                 {
                     m_Inventory.RemoveItem(ingredient.Item as CollectibleItemSO, ingredient.Count);
                 }
+
+                Initialize();
             }
             else
             {
@@ -99,6 +102,23 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
                 TimeSpan elapsed = currentTime - startTime;
 
                 return elapsed.TotalSeconds >= order.OrderCompletionTimeInSec;
+            }
+
+            return false;
+        }
+
+        private bool IsOrderCooking(Order order)
+        {
+            string prefName = Order.ORDER_PREF_NAME_PREFIX + order.OrderId;
+
+            if (PlayerPrefs.HasKey(prefName))
+            {
+                DateTime startTime = PlayerPrefsStorage.GetDateTime(prefName, DateTime.Now);
+                DateTime currentTime = DateTime.Now;
+
+                TimeSpan elapsed = currentTime - startTime;
+
+                return elapsed.TotalSeconds < order.OrderCompletionTimeInSec;
             }
 
             return false;
