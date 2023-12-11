@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EpicMergeClone.Game.Mechanics.OrderSystem
 {
-    public class OrderManager 
+    public class OrderManager
     {
         private BoardManager m_BoardManager;
         private UIManager m_UIManager;
@@ -17,11 +17,32 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
 
         public List<CharacterOrderPair> m_CurrentOrderCharacterPairs;
 
+        private bool isInitialized = false;
+
         public OrderManager(BoardManager boardManager, UIManager uiManager, Inventory inventory)
         {
             m_Inventory = inventory;
             m_UIManager = uiManager;
             m_BoardManager = boardManager;
+        }
+
+        public void Initialize()
+        {
+            if (isInitialized)
+                return;
+
+            m_CurrentOrderCharacterPairs = GetCurrentOrderCharacterPairs();
+
+            foreach (var orderCharacterPairs in m_CurrentOrderCharacterPairs)
+            {
+                var detailsPanel = m_UIManager.OrderPanel.GetOrderDetailsPanel(orderCharacterPairs.Order);
+                detailsPanel.OnCookClicked += CookOrder;
+                detailsPanel.OnClaimClicked += ClaimOrder;
+
+                detailsPanel.SetButtonsVisibility(IsOrderCooked(orderCharacterPairs.Order));
+            }
+
+            isInitialized = true;
         }
 
         public List<CharacterOrderPair> GetCurrentOrderCharacterPairs()
@@ -33,7 +54,7 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
             {
                 characterOrderPairs.Add(new CharacterOrderPair()
                 {
-                    characterItemSO = characters[i].ItemDataSO as CharacterItemSO,
+                    characterItem = characters[i],
                     Order = characters[i].GetCurrentOrder()
                 });
             }
@@ -59,7 +80,19 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
             }
         }
 
-        public bool IsOrderCooked(Order order)
+        private void ClaimOrder(Order order)
+        {
+            if (!IsOrderCooked(order))
+                return;
+
+            var pair = m_CurrentOrderCharacterPairs.Find(pair => pair.Order == order);
+            pair.characterItem.CompleteOrder();
+
+            m_CurrentOrderCharacterPairs = GetCurrentOrderCharacterPairs();
+            m_UIManager.OrderPanel.Initialize(m_CurrentOrderCharacterPairs);
+        }
+
+        private bool IsOrderCooked(Order order)
         {
             string prefName = Order.ORDER_PREF_NAME_PREFIX + order.OrderId;
 
@@ -91,7 +124,7 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
         [System.Serializable]
         public struct CharacterOrderPair
         {
-            public CharacterItemSO characterItemSO;
+            public CharacterItem characterItem;
             public Order Order;
         }
     }

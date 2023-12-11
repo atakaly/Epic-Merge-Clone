@@ -9,8 +9,8 @@ namespace EpicMergeClone.UI.OrderUI
 {
     public class OrderDetailsPanel : MonoBehaviour
     {
-        public event Action OnClaimClicked;
-        public event Action OnCookClicked;
+        public event Action<Order> OnClaimClicked;
+        public event Action<Order> OnCookClicked;
 
         [SerializeField] private Image m_CharacterImage;
         [SerializeField] private Image m_OrderImage;
@@ -23,16 +23,17 @@ namespace EpicMergeClone.UI.OrderUI
 
         private List<OrderIngredientItemUI> m_OrderIngredientUIItems = new List<OrderIngredientItemUI>();
 
+        private Order m_Order;
+
         public void Initialize(Order order, CharacterItemSO characterItem)
         {
+            m_Order = order;
+
             m_CharacterImage.sprite = characterItem?.itemSprite;
             m_OrderImage.sprite = order.OrderSprite;
 
             ClearUIItems();
             PopulateIngredients(order.OrderIngredients);
-
-            m_ClaimButton.onClick.AddListener(() => ClaimClick());
-            m_CookButton.onClick.AddListener(() => CookClick());
         }
 
         public void PopulateIngredients(List<OrderIngredient> orderIngredients)
@@ -69,12 +70,12 @@ namespace EpicMergeClone.UI.OrderUI
 
         public void ClaimClick()
         {
-            OnClaimClicked?.Invoke();
+            OnClaimClicked?.Invoke(m_Order);
         }
 
         public void CookClick()
         {
-            OnCookClicked?.Invoke();
+            OnCookClicked?.Invoke(m_Order);
         }
 
         public void SetButtonsVisibility(bool isOrderCooked)

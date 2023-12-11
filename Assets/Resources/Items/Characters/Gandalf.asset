@@ -15,5 +15,6 @@ MonoBehaviour:
   ItemId: gandalf
   itemSprite: {fileID: 21300000, guid: 9ca49e52e4ae5c543b6edb436463b922, type: 3}
   orders:
-  - {fileID: 11400000, guid: 6e25f0c6bf9612c4d9c7129cb87d2245, type: 2}
+  - {fileID: 11400000, guid: 0a430846e2b4e3047ae2582d11efcaad, type: 2}
   - {fileID: 11400000, guid: 92794c1ba93320e4c89f41df8b6ac651, type: 2}
+  - {fileID: 11400000, guid: 6e25f0c6bf9612c4d9c7129cb87d2245, type: 2}

@@ -44,7 +44,7 @@ namespace EpicMergeClone.Game.Items
             m_UIManager = UIManager;
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             m_ItemInputHandler = GetComponent<ItemInputHandler>();
 

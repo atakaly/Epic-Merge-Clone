@@ -10,6 +10,17 @@ namespace EpicMergeClone.Game.Items
 
         public IngredientProducerItemSO ItemData => ItemDataSO as IngredientProducerItemSO;
 
+        protected override void Start()
+        {
+            base.Start();
+
+            if (!PlayerPrefs.HasKey(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell))
+            {
+                PlayerPrefsStorage.SetDateTime(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell, DateTime.MinValue);
+                return;
+            }
+        }
+
         protected override void OnClick()
         {
             base.OnClick();
@@ -44,12 +55,6 @@ namespace EpicMergeClone.Game.Items
 
         private void StartProduce()
         {
-            if (!PlayerPrefs.HasKey(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell))
-            {
-                PlayerPrefsStorage.SetDateTime(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell, DateTime.MinValue);
-                return;
-            }
-
             PlayerPrefsStorage.SetDateTime(PRODUCE_ITEM_START_TIME_PREFIX + ItemData.ItemId + CurrentCell, DateTime.UtcNow);
         }
 

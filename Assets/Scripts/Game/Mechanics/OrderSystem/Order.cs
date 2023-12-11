@@ -13,6 +13,7 @@ namespace EpicMergeClone.Game.Mechanics.OrderSystem
         public string OrderName;
         public Sprite OrderSprite;
         public int OrderCompletionTimeInSec;
+        public OrderItemSO OrderItemSO;
 
         public List<OrderIngredient> OrderIngredients;
         public List<ItemDataSO> Rewards;

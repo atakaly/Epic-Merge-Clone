@@ -13,18 +13,26 @@ namespace EpicMergeClone.Game.Items
 
             m_UIManager.OrderPanel.Show();
             m_UIManager.OrderPanel.Initialize(m_OrderManager.GetCurrentOrderCharacterPairs());
+            m_OrderManager.Initialize();
         }
 
-        public void OrderComplete()
+        public void CompleteOrder()
         {
-            int currentOrderIndex = ItemData.GetCurrentOrderIndex();
-            currentOrderIndex++;
-            if(currentOrderIndex >= ItemData.orders.Count - 1)
-            {
-                currentOrderIndex = ItemData.orders.Count - 1;
-            }
+            ItemData.CompleteOrder();
+            ProduceOrderItems();
+        }
 
-            PlayerPrefs.SetInt(ItemData.ItemId + CharacterItemSO.CURRENT_ORDER_PREF_SUFFIX, currentOrderIndex);
+        private void ProduceOrderItems()
+        {
+            var currentOrder = GetCurrentOrder();
+            
+            for (int i = 0; i < ItemData.orders.Count; i++)
+            {
+                var newCollectible = m_ItemPoolManager.SpawnItem(currentOrder.OrderItemSO);
+                var cell = CurrentCell.GetFirstAvailableNeighbour();
+
+                cell.AddItem(newCollectible, transform.position, cell.transform.position);
+            }
         }
 
         public Order GetCurrentOrder()
