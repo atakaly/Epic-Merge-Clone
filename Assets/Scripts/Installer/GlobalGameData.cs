@@ -1,5 +1,6 @@
 using EpicMergeClone.Game.Items;
 using EpicMergeClone.Game.Mechanics.OrderSystem;
+using EpicMergeClone.Game.Player;
 using UnityEngine;
 using Zenject;
 
@@ -10,6 +11,7 @@ namespace EpicMergeClone.Installers
     {
         public AllItemDatas allItemDatas;
         public OrdersDataSO allOrderDatas;
+        public AllPlayerLevelsData allPlayerLevelsData;
 
         public string InitialGridState = "";
 

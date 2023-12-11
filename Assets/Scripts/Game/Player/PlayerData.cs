@@ -15,7 +15,7 @@ namespace EpicMergeClone.Game.Player
 
         public PlayerData()
         {
-            Level = 1;
+            Level = 0;
             Experience = 0;
             Coin = 100;
             MaxEnergy = CurrentEnergy = 100;

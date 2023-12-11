@@ -1,4 +1,5 @@
 using EpicMergeClone.Game.Player;
+using EpicMergeClone.Installers;
 using EpicMergeClone.UI;
 using EpicMergeClone.Utils;
 using System;
@@ -42,6 +43,7 @@ namespace EpicMergeClone.Game.Mechanics
             set
             {
                 m_PlayerData.Experience = value;
+                TryAddLevel();
                 OnPlayerDataUpdate();
             }
         }
@@ -111,12 +113,22 @@ namespace EpicMergeClone.Game.Mechanics
             }
         }
 
+        public float NeedExperience
+        {
+            get
+            {
+                return m_GlobalGameData.allPlayerLevelsData.PlayerLevels[Level].NeedExperience;
+            }
+        }
+
         private UIManager m_UIManager;
+        private GlobalGameData m_GlobalGameData;
 
         [Inject]
-        public void Construct(UIManager uiManager)
+        public void Construct(UIManager uiManager, GlobalGameData globalGameData)
         {
             m_UIManager = uiManager;
+            m_GlobalGameData = globalGameData;
         }
 
         public void Awake()
@@ -164,6 +176,17 @@ namespace EpicMergeClone.Game.Mechanics
             }
         }
 
+        private void TryAddLevel()
+        {
+            if (Experience >= NeedExperience)
+            {
+                var modExp = Experience % NeedExperience;
+                Level++;
+                Debug.Log(modExp);
+                Experience = modExp;
+            }
+        }
+
         private void OnPlayerDataUpdate()
         {
             GameState.SavePlayerData(m_PlayerData);
@@ -174,7 +197,7 @@ namespace EpicMergeClone.Game.Mechanics
         private void UpdateUI()
         {
             m_UIManager.UpperBarUIController.UpdateEnergyText(CurrentEnergy, MaxEnergy);
-            m_UIManager.UpperBarUIController.UpdateExperience(Experience);
+            m_UIManager.UpperBarUIController.UpdateExperience(Experience, NeedExperience);
             m_UIManager.UpperBarUIController.UpdateLevelText(Level);
             m_UIManager.UpperBarUIController.UpdateWorkerText(CurrentWorkers, MaxWorkers);
             m_UIManager.UpperBarUIController.UpdateCoinText(Coin);

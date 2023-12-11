@@ -12,7 +12,7 @@ namespace EpicMergeClone.UI.OrderUI
         [SerializeField] private RectTransform orderItemContainer;
         [SerializeField] private RectTransform orderDetailsContainer;
 
-        private List<OrderUIItemsPair> orderUIItemsPairs = new List<OrderUIItemsPair>();
+        public List<OrderUIItemsPair> orderUIItemsPairs = new List<OrderUIItemsPair>();
 
         public void Initialize(List<OrderManager.CharacterOrderPair> characterOrderPairs)
         {
@@ -28,7 +28,6 @@ namespace EpicMergeClone.UI.OrderUI
                 pair.Order = orderPair.Order;
                 pair.ItemUI.Initialize(orderPair.Order);
                 pair.DetailsPanel.Initialize(orderPair.Order, orderPair.characterItem.ItemData);
-
                 orderUIItemsPairs.Add(pair);
             }
         }

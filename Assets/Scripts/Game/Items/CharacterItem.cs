@@ -18,8 +18,8 @@ namespace EpicMergeClone.Game.Items
 
         public void CompleteOrder()
         {
-            ItemData.CompleteOrder();
             ProduceOrderItems();
+            ItemData.CompleteOrder();
         }
 
         private void ProduceOrderItems()

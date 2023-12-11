@@ -23,7 +23,7 @@ namespace EpicMergeClone.UI
         public void UpdateLevelText(int level)
         {
             stringBuilder.Clear();
-            stringBuilder.Append(level);
+            stringBuilder.Append(level + 1);
 
             levelText.text = stringBuilder.ToString();
         }
@@ -36,9 +36,10 @@ namespace EpicMergeClone.UI
             coinText.text = stringBuilder.ToString();
         }
 
-        public void UpdateExperience(float exp)
+        public void UpdateExperience(float exp, float maxExp)
         {
-            experienceProgressBar.UpdateFill(exp);
+            var mappedVal = exp.Remap(0, maxExp, 0, 1f);
+            experienceProgressBar.UpdateFill(mappedVal);
         }
 
         public void UpdateWorkerText(int currentWorker, int maxWorker)

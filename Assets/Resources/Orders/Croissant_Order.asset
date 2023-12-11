@@ -16,6 +16,7 @@ MonoBehaviour:
   OrderName: Croissant
   OrderSprite: {fileID: 21300000, guid: 979b9fc1cb322054c8490682e1d2abfd, type: 3}
   OrderCompletionTimeInSec: 25
+  OrderItemSO: {fileID: 11400000, guid: 706d3689896ceb54595d220e75b9980e, type: 2}
   OrderIngredients:
   - Item: {fileID: 11400000, guid: 1ebb0cae720bc8a43b20977e2790a24a, type: 2}
     Count: 1

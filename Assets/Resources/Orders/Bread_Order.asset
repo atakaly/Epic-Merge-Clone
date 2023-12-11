@@ -16,6 +16,7 @@ MonoBehaviour:
   OrderName: Bread
   OrderSprite: {fileID: 21300000, guid: b73c8c74128528b45a57de5daa39223c, type: 3}
   OrderCompletionTimeInSec: 5
+  OrderItemSO: {fileID: 11400000, guid: 7539909d10b82444488096a3d428efa3, type: 2}
   OrderIngredients:
   - Item: {fileID: 11400000, guid: 1be97e8b2aa8a064b937cbcf28fa1c8f, type: 2}
     Count: 2
